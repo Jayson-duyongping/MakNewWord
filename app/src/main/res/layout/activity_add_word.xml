@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/head_back"
+    android:orientation="vertical"
+    tools:context="com.mak.newword.show.activity.AddWordActivity">
+
+    <com.mak.newword.widget.HeaderView
+        android:id="@+id/headerView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/head_height" />
+
+    <TextView
+        android:id="@+id/tip_tv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:background="#22A2CD5A"
+        android:gravity="center"
+        android:text="美好的一天从记单词开始！"
+        android:textColor="#ADFF2F"
+        android:visibility="gone" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_margin="@dimen/window_padding"
+        android:background="@drawable/shape_edit_bg"
+        android:hint="生词"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:src="@mipmap/plus" />
+</LinearLayout>

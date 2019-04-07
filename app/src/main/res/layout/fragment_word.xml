@@ -1,0 +1,40 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/word_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/head_back"
+    android:orientation="vertical"
+    tools:context="com.mak.newword.show.fragment.WordFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/head_height"
+        android:background="@color/head_back"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/window_padding"
+        android:paddingRight="@dimen/window_padding">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="生词展示页"
+            android:textColor="@color/head_text"
+            android:textSize="@dimen/head_text_size" />
+
+        <TextView
+            android:id="@+id/add_word_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="新增"
+            android:textColor="@color/head_text"
+            android:textSize="@dimen/head_text_size" />
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/contentLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white" />
+</LinearLayout>
