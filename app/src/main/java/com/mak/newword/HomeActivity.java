@@ -8,9 +8,14 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.mak.newword.base.BaseFragmentActivity;
+import com.mak.newword.constant.StringConstant;
 import com.mak.newword.show.fragment.MineFragment;
 import com.mak.newword.show.fragment.SentenceFragment;
 import com.mak.newword.show.fragment.WordFragment;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,13 +67,14 @@ public class HomeActivity extends BaseFragmentActivity {
 
     @Override
     protected void initData() {
-
+        EventBus.getDefault().register(this);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         mViewPager.removeOnPageChangeListener(mPageChangeListener);
+        EventBus.getDefault().unregister(this);
     }
 
     private ViewPager.OnPageChangeListener mPageChangeListener = new ViewPager.OnPageChangeListener() {
@@ -118,6 +124,24 @@ public class HomeActivity extends BaseFragmentActivity {
         @Override
         public int getCount() {
             return this.mList == null ? 0 : this.mList.size();
+        }
+    }
+
+
+    /**
+     * 接收总线事件，注意：不能传入基础数据类型
+     *
+     * @param eventStr
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN, priority = 100) //在ui线程执行 优先级100
+    public void onHomeBus(String eventStr) {
+        switch (eventStr) {
+            //刷新单词列表
+            case StringConstant.Event_RefreshWordList:
+                if (wordFragment != null) {
+                    wordFragment.refreshList();
+                }
+                break;
         }
     }
 }

@@ -50,16 +50,14 @@ public class WordFragment extends BaseFragment {
     @OnClick(R.id.add_word_tv)
     public void onAddWord() {
         Intent intent = new Intent(getActivity(), AddWordActivity.class);
-        startActivityForResult(intent, 0001);
+        startActivity(intent);
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == getActivity().RESULT_OK) {
-            if (requestCode == 0001) {
-                //刷新当前页面
-                wordListFrag.refreshList();
-            }
-        }
+    /**
+     * 刷新当前页面
+     */
+    public void refreshList() {
+        //刷新当前页面
+        wordListFrag.refreshList();
     }
 }

@@ -48,4 +48,6 @@ dependencies {
     //greendao
     implementation 'org.greenrobot:greendao:3.0.1'
     implementation 'org.greenrobot:greendao-generator:3.0.0'
+    //eventbus
+    implementation 'org.greenrobot:eventbus:3.0.0'
 }

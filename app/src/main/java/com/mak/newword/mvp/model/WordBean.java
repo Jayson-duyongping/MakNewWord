@@ -9,6 +9,7 @@ import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.NotNull;
 import org.greenrobot.greendao.annotation.Property;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.greenrobot.greendao.annotation.Generated;
@@ -18,7 +19,7 @@ import org.greenrobot.greendao.annotation.Generated;
  * Content: 一个单词实体
  */
 @Entity(nameInDb = "word_table")
-public class WordBean {
+public class WordBean implements Serializable {
     @Id(autoincrement = true)
     private Long id;
     @Property
@@ -40,7 +41,60 @@ public class WordBean {
     private boolean isRemember;//是否已经记忆
     @Property
     private int lookTime;//查看次数
-
+    public int getLookTime() {
+        return this.lookTime;
+    }
+    public void setLookTime(int lookTime) {
+        this.lookTime = lookTime;
+    }
+    public boolean getIsRemember() {
+        return this.isRemember;
+    }
+    public void setIsRemember(boolean isRemember) {
+        this.isRemember = isRemember;
+    }
+    public List<String> getRelations() {
+        return this.relations;
+    }
+    public void setRelations(List<String> relations) {
+        this.relations = relations;
+    }
+    public String getExampleZh() {
+        return this.exampleZh;
+    }
+    public void setExampleZh(String exampleZh) {
+        this.exampleZh = exampleZh;
+    }
+    public String getExampleEn() {
+        return this.exampleEn;
+    }
+    public void setExampleEn(String exampleEn) {
+        this.exampleEn = exampleEn;
+    }
+    public String getMethod() {
+        return this.method;
+    }
+    public void setMethod(String method) {
+        this.method = method;
+    }
+    public List<MeanBean> getMeans() {
+        return this.means;
+    }
+    public void setMeans(List<MeanBean> means) {
+        this.means = means;
+    }
+    public String getContent() {
+        return this.content;
+    }
+    public void setContent(String content) {
+        this.content = content;
+    }
+    public Long getId() {
+        return this.id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
     @Generated(hash = 11040600)
     public WordBean(Long id, @NotNull String content, List<MeanBean> means,
             String method, String exampleEn, String exampleZh,
@@ -55,88 +109,7 @@ public class WordBean {
         this.isRemember = isRemember;
         this.lookTime = lookTime;
     }
-
     @Generated(hash = 1596526216)
     public WordBean() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public List<MeanBean> getMeans() {
-        return means;
-    }
-
-    public void setMeans(List<MeanBean> means) {
-        this.means = means;
-    }
-
-    public String getMethod() {
-        return method;
-    }
-
-    public void setMethod(String method) {
-        this.method = method;
-    }
-
-    public String getExampleEn() {
-        return exampleEn;
-    }
-
-    public void setExampleEn(String exampleEn) {
-        this.exampleEn = exampleEn;
-    }
-
-    public String getExampleZh() {
-        return exampleZh;
-    }
-
-    public void setExampleZh(String exampleZh) {
-        this.exampleZh = exampleZh;
-    }
-
-    public List<String> getRelations() {
-        return relations;
-    }
-
-    public void setRelations(List<String> relations) {
-        this.relations = relations;
-    }
-
-    public boolean isRemember() {
-        return isRemember;
-    }
-
-    public void setRemember(boolean remember) {
-        isRemember = remember;
-    }
-
-    public int getLookTime() {
-        return lookTime;
-    }
-
-    public void setLookTime(int lookTime) {
-        this.lookTime = lookTime;
-    }
-
-    public boolean getIsRemember() {
-        return this.isRemember;
-    }
-
-    public void setIsRemember(boolean isRemember) {
-        this.isRemember = isRemember;
     }
 }

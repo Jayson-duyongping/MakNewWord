@@ -1,10 +1,12 @@
 package com.mak.newword.mvp.model;
 
+import java.io.Serializable;
+
 /**
  * Created by jayson on 2019/4/8.
  * Content:
  */
-public class MeanBean{
+public class MeanBean implements Serializable {
     private String class_;
     private String mean_;
 

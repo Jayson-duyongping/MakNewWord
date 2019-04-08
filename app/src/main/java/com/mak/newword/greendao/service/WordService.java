@@ -47,11 +47,23 @@ public class WordService {
      *
      * @param user
      */
-    public long insertWord(WordBean user) {
+    public void insertWord(WordBean user) {
         DaoMaster daoMaster = new DaoMaster(dbManager.getWritableDatabase());
         DaoSession daoSession = daoMaster.newSession();
         WordBeanDao userDao = daoSession.getWordBeanDao();
-        return userDao.insert(user);
+        userDao.insert(user);
+    }
+
+    /**
+     * 修改一条记录
+     *
+     * @param user
+     */
+    public void updateWord(WordBean user) {
+        DaoMaster daoMaster = new DaoMaster(dbManager.getWritableDatabase());
+        DaoSession daoSession = daoMaster.newSession();
+        WordBeanDao userDao = daoSession.getWordBeanDao();
+        userDao.update(user);
     }
 
     /**

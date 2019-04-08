@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.jayson.commonlib.widget.smartrefresh.util.DensityUtil;
 import com.mak.newword.R;
 import com.mak.newword.base.BaseFragmentActivity;
+import com.mak.newword.constant.StringConstant;
 import com.mak.newword.greendao.service.WordService;
 import com.mak.newword.mvp.model.MeanBean;
 import com.mak.newword.mvp.model.WordBean;
@@ -25,6 +26,8 @@ import com.mak.newword.utils.ToastUtils;
 import com.mak.newword.widget.HeaderView;
 import com.mak.newword.widget.RoundImageView;
 import com.mak.newword.widget.SpinerPopWindow;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -59,8 +62,8 @@ public class AddWordActivity extends BaseFragmentActivity {
     private SpinerPopWindow<String> mSpinerPopWindow;
     private List<String> classList;
     private List<MeanBean> meanList;
-
-    private Handler mHandler = new Handler();
+    //本类全局单词实体
+    private WordBean wordBean;
 
     @Override
     protected int getContentViewId() {
@@ -93,14 +96,23 @@ public class AddWordActivity extends BaseFragmentActivity {
      * 执行保存
      */
     private void saveWord() {
-        WordBean word = new WordBean();
+        //是否是修改
+        boolean idEdit;
+        if (wordBean == null) {
+            //新增
+            idEdit = false;
+            wordBean = new WordBean();
+        } else {
+            //修改
+            idEdit = true;
+        }
         String content = contentEt.getText().toString();
         //主内容必须填
         if (TextUtils.isEmpty(content)) {
             ToastUtils.showToast(mContext, "请填写一个生词");
             return;
         }
-        word.setContent(content);
+        wordBean.setContent(content);
         //多项词义
         for (int i = 0; i < meanContainerLl.getChildCount(); i++) {
             LinearLayout view = (LinearLayout) meanContainerLl.getChildAt(i);
@@ -111,23 +123,22 @@ public class AddWordActivity extends BaseFragmentActivity {
             mean.setMean_(meanEt.getText().toString());
             meanList.add(mean);
         }
-        word.setMeans(meanList);
+        wordBean.setMeans(meanList);
         //例句跟方法
-        word.setExampleEn(exEnEt.getText().toString());
-        word.setExampleZh(exZhEt.getText().toString());
-        word.setMethod(methodEt.getText().toString());
-        //保存数据库
-        long result = WordService.getInstance(mContext).insertWord(word);
-        //保存完成
-        if (result == -1) {
-            ToastUtils.showToast(mContext, "保存失败");
+        wordBean.setExampleEn(exEnEt.getText().toString());
+        wordBean.setExampleZh(exZhEt.getText().toString());
+        wordBean.setMethod(methodEt.getText().toString());
+        if (idEdit) {
+            //修改
+            WordService.getInstance(mContext).updateWord(wordBean);
         } else {
-            ToastUtils.showToast(mContext, "保存成功");
-            Intent intent = new Intent();
-            intent.putExtra("result", 1);
-            setResult(RESULT_OK);
-            this.finish();
+            //新增
+            WordService.getInstance(mContext).insertWord(wordBean);
         }
+        //保存完成
+        ToastUtils.showToast(mContext, "保存成功");
+        EventBus.getDefault().post(StringConstant.Event_RefreshWordList);
+        this.finish();
     }
 
     @Override
@@ -136,10 +147,30 @@ public class AddWordActivity extends BaseFragmentActivity {
         classList = Arrays.asList(getResources().getStringArray(R.array.word_class));
         //初始化词义集合
         meanList = new ArrayList<>();
+        //编辑页面
+        wordBean = (WordBean) getIntent().getSerializableExtra("word");
+        if (wordBean != null) {
+            setEditView(wordBean);
+        }
     }
 
-    private void showEditView() {
-
+    /**
+     * 设置编辑页面
+     */
+    private void setEditView(WordBean wordBean) {
+        contentEt.setText(wordBean.getContent());
+        List<MeanBean> means = wordBean.getMeans();
+        if (means != null) {
+            if (means.size() >= 1) {
+                otherLl.setVisibility(View.VISIBLE);
+            }
+            for (int i = 0; i < means.size(); i++) {
+                addNewMean(means.get(i));
+            }
+        }
+        exEnEt.setText(wordBean.getExampleEn());
+        exZhEt.setText(wordBean.getExampleZh());
+        methodEt.setText(wordBean.getMethod());
     }
 
     @OnClick(R.id.plus_iv)
@@ -151,17 +182,22 @@ public class AddWordActivity extends BaseFragmentActivity {
         if (otherLl.getVisibility() == View.GONE) {
             otherLl.setVisibility(View.VISIBLE);
         }
-        addNewMean();
+        addNewMean(null);
     }
 
     /**
      * 添加一个新的词义
      */
-    public void addNewMean() {
+    public void addNewMean(MeanBean mean) {
         final View gameView = LayoutInflater.from(mContext).inflate(R.layout.item_word_mean, null);
         final TextView classTv = gameView.findViewById(R.id.class_tv);
         final EditText meanEt = gameView.findViewById(R.id.mean_et);
         final ImageView meanDeleteIv = gameView.findViewById(R.id.mean_delete_iv);
+        //设置词性值
+        if (mean != null) {
+            classTv.setText(mean.getClass_());
+            meanEt.setText(mean.getMean_());
+        }
         //选择词性
         classTv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -229,12 +265,5 @@ public class AddWordActivity extends BaseFragmentActivity {
         animatorSetsuofang.setDuration(500);
         //开始动画
         animatorSetsuofang.start();
-        //列表滑动到底部
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                showEditView();
-            }
-        }, 500);
     }
 }

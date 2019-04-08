@@ -1,6 +1,7 @@
 package com.mak.newword.show.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.SimpleItemAnimator;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -11,9 +12,12 @@ import com.mak.newword.base.BaseRecyclerAdapter;
 import com.mak.newword.greendao.service.WordService;
 import com.mak.newword.mvp.model.MeanBean;
 import com.mak.newword.mvp.model.WordBean;
+import com.mak.newword.show.activity.AddWordActivity;
+import com.mak.newword.utils.ToastUtils;
 import com.mak.newword.widget.SmartViewHolder;
 import com.mak.newword.widget.SwipeMenuLayout;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -37,7 +41,7 @@ public class WordItemAdapter extends BaseRecyclerAdapter<WordBean> {
     }
 
     private void onHandle(SmartViewHolder holder, final WordBean model, final int position) {
-        SwipeMenuLayout swipeMenuLayout = holder.getView(R.id.swipemenu_view);
+        final SwipeMenuLayout swipeMenuLayout = holder.getView(R.id.swipemenu_view);
         swipeMenuLayout.setSwipeEnable(true);
         swipeMenuLayout.setIos(false);
         LinearLayout contentLl = holder.getView(R.id.content_ll);
@@ -53,8 +57,9 @@ public class WordItemAdapter extends BaseRecyclerAdapter<WordBean> {
         } else {
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < means.size(); i++) {
-                sb.append(means.get(i).getClass_() + " " + means.get(i).getMean_() + ";");
+                sb.append(means.get(i).getClass_() + " " + means.get(i).getMean_() + "； ");
             }
+            wordMeanTv.setText(sb.toString());
         }
         //点击内容
         contentLl.setOnClickListener(new View.OnClickListener() {
@@ -67,7 +72,10 @@ public class WordItemAdapter extends BaseRecyclerAdapter<WordBean> {
         editTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                swipeMenuLayout.smoothClose();
+                Intent intent = new Intent(context, AddWordActivity.class);
+                intent.putExtra("word", model);
+                context.startActivity(intent);
             }
         });
         //删除内容
@@ -75,6 +83,7 @@ public class WordItemAdapter extends BaseRecyclerAdapter<WordBean> {
             @Override
             public void onClick(View view) {
                 WordService.getInstance(context).deleteWord(model);
+                swipeMenuLayout.smoothClose();
                 removePosition(position);
             }
         });
