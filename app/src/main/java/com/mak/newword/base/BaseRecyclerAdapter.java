@@ -12,6 +12,7 @@ import android.widget.ListAdapter;
 
 
 import com.mak.newword.widget.SmartViewHolder;
+import com.mak.newword.widget.SwipeMenuLayout;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -114,6 +115,15 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<SmartV
         notifyListDataSetChanged();
         return this;
     }
+
+    public BaseRecyclerAdapter<T> removePosition(int position) {
+        mList.remove(position);
+        //这样移除更新不会与侧滑删除效果冲突
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, mList.size());
+        return this;
+    }
+
     //</editor-fold>
 
     //<editor-fold desc="ListAdapter">
@@ -191,6 +201,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<SmartV
 
     /**
      * 为了避免setHasStableIds所带来的问题，需要重写如下
+     *
      * @param position
      * @return
      */

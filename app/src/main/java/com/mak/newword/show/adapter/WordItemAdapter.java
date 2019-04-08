@@ -1,10 +1,20 @@
 package com.mak.newword.show.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.SimpleItemAnimator;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.mak.newword.R;
 import com.mak.newword.base.BaseRecyclerAdapter;
+import com.mak.newword.greendao.service.WordService;
+import com.mak.newword.mvp.model.MeanBean;
+import com.mak.newword.mvp.model.WordBean;
 import com.mak.newword.widget.SmartViewHolder;
+import com.mak.newword.widget.SwipeMenuLayout;
+
+import java.util.List;
 
 /**
  * 创建人：jayson
@@ -12,7 +22,7 @@ import com.mak.newword.widget.SmartViewHolder;
  * 创建内容：
  */
 
-public class WordItemAdapter extends BaseRecyclerAdapter<String> {
+public class WordItemAdapter extends BaseRecyclerAdapter<WordBean> {
 
     private Context context;
 
@@ -22,11 +32,51 @@ public class WordItemAdapter extends BaseRecyclerAdapter<String> {
     }
 
     @Override
-    protected void onBindViewHolder(SmartViewHolder holder, String model, int position) {
+    protected void onBindViewHolder(SmartViewHolder holder, WordBean model, int position) {
         onHandle(holder, model, position);
     }
 
-    private void onHandle(SmartViewHolder holder, String model, int position) {
+    private void onHandle(SmartViewHolder holder, final WordBean model, final int position) {
+        SwipeMenuLayout swipeMenuLayout = holder.getView(R.id.swipemenu_view);
+        swipeMenuLayout.setSwipeEnable(true);
+        swipeMenuLayout.setIos(false);
+        LinearLayout contentLl = holder.getView(R.id.content_ll);
+        TextView wordNameTv = holder.getView(R.id.word_name_tv);
+        TextView wordMeanTv = holder.getView(R.id.word_mean_tv);
+        TextView editTv = holder.getView(R.id.edit_tv);
+        TextView deleteTv = holder.getView(R.id.delete_tv);
+        //-----
+        wordNameTv.setText(model.getContent());
+        List<MeanBean> means = model.getMeans();
+        if (means == null || means.size() == 0) {
+            wordMeanTv.setText("");
+        } else {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < means.size(); i++) {
+                sb.append(means.get(i).getClass_() + " " + means.get(i).getMean_() + ";");
+            }
+        }
+        //点击内容
+        contentLl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+            }
+        });
+        //编辑内容
+        editTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        //删除内容
+        deleteTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                WordService.getInstance(context).deleteWord(model);
+                removePosition(position);
+            }
+        });
     }
 }

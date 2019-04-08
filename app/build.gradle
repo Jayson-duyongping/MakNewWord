@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'org.greenrobot.greendao'
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -16,6 +16,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+}
+
+greendao {
+    //版本号
+    schemaVersion 1
+    //greendao输出dao的数据库操作实体类文件夹（相对路径 包名+自定义路径名称，包将创建于包名的直接路径下）
+    daoPackage 'com.mak.newword.greendao.gen'
+    //greenDao实体类包文件夹
+    targetGenDir 'src/main/java'
 }
 
 dependencies {
@@ -36,4 +45,7 @@ dependencies {
     implementation 'com.gyf.immersionbar:immersionbar:2.3.3'
     //卡片
     implementation 'com.android.support:cardview-v7:28.0.0'
+    //greendao
+    implementation 'org.greenrobot:greendao:3.0.1'
+    implementation 'org.greenrobot:greendao-generator:3.0.0'
 }

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="word_class">
+        <item>n.</item>
+        <item>v.</item>
+        <item>vi.</item>
+        <item>vt.</item>
+        <item>adj.</item>
+        <item>adv.</item>
+        <item>pron.</item>
+        <item>prep.</item>
+        <item>conj.</item>
+    </string-array>
+</resources>

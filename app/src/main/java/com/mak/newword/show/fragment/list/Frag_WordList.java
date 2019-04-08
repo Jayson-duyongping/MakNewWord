@@ -2,6 +2,8 @@ package com.mak.newword.show.fragment.list;
 
 import com.mak.newword.base.BaseListFragment;
 import com.mak.newword.base.BaseRecyclerAdapter;
+import com.mak.newword.greendao.service.WordService;
+import com.mak.newword.mvp.model.WordBean;
 import com.mak.newword.show.adapter.WordItemAdapter;
 
 import java.util.ArrayList;
@@ -32,17 +34,26 @@ public class Frag_WordList extends BaseListFragment {
 
     }
 
+    /**
+     * 刷新List
+     */
+    public void refreshList() {
+        autoRefreshList();
+    }
+
     @Override
     protected void getHttpData() {
-        if (wordItemAdapter.getCount() == 100) {
-            notifyAdapterUi(isRefresh, true, 0);
-            return;
+        if (isRefresh) {
+            //刷新，每次查询20个
+            List<WordBean> wordList = WordService.getInstance(mContext)
+                    .queryWordList((currentPage - 1) * 20, 20);
+            wordItemAdapter.refresh(wordList);
+        } else {
+            //加载，每次查询20个
+            List<WordBean> wordList = WordService.getInstance(mContext)
+                    .queryWordList((currentPage - 1) * 20, 20);
+            wordItemAdapter.loadMore(wordList);
         }
-        List<String> temList = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            temList.add("");
-        }
-        wordItemAdapter.loadMore(temList);
         notifyAdapterUi(isRefresh, true, 0);
     }
 }
