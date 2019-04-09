@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/head_back"
+    android:orientation="vertical"
+    tools:context=".show.activity.CommentActivity">
+
+    <com.mak.newword.widget.HeaderView
+        android:id="@+id/headerView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/head_height" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/content_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/window_padding"
+            android:background="@drawable/shape_edit_bg"
+            android:gravity="top"
+            android:hint="有什么想对我们说的，我们一定改进！"
+            android:minHeight="150dp"
+            android:padding="10dp" />
+    </LinearLayout>
+</LinearLayout>

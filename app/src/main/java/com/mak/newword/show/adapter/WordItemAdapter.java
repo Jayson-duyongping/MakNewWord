@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.SimpleItemAnimator;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -45,6 +46,7 @@ public class WordItemAdapter extends BaseRecyclerAdapter<WordBean> {
         final SwipeMenuLayout swipeMenuLayout = holder.getView(R.id.swipemenu_view);
         swipeMenuLayout.setSwipeEnable(true);
         swipeMenuLayout.setIos(false);
+        ImageView finishIv = holder.getView(R.id.finish_iv);
         LinearLayout contentLl = holder.getView(R.id.content_ll);
         TextView wordNameTv = holder.getView(R.id.word_name_tv);
         TextView wordMeanTv = holder.getView(R.id.word_mean_tv);
@@ -61,6 +63,11 @@ public class WordItemAdapter extends BaseRecyclerAdapter<WordBean> {
                 sb.append(means.get(i).getClass_() + " " + means.get(i).getMean_() + "； ");
             }
             wordMeanTv.setText(sb.toString());
+        }
+        if (model.getIsRemember()) {
+            finishIv.setVisibility(View.VISIBLE);
+        } else {
+            finishIv.setVisibility(View.GONE);
         }
         //点击内容
         contentLl.setOnClickListener(new View.OnClickListener() {

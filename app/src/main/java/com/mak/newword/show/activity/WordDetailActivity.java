@@ -8,9 +8,14 @@ import android.widget.TextView;
 
 import com.mak.newword.R;
 import com.mak.newword.base.BaseFragmentActivity;
+import com.mak.newword.constant.StringConstant;
+import com.mak.newword.greendao.service.WordService;
 import com.mak.newword.mvp.model.MeanBean;
 import com.mak.newword.mvp.model.WordBean;
+import com.mak.newword.utils.ToastUtils;
 import com.mak.newword.widget.HeaderView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -47,11 +52,24 @@ public class WordDetailActivity extends BaseFragmentActivity {
                 onBackPressed();
             }
         });
+        headerView.setRightTextOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //标记为已记
+                wordBean.setIsRemember(true);
+                WordService.getInstance(mContext).updateWord(wordBean);
+                ToastUtils.showToast(mContext, "已标记为已记");
+                EventBus.getDefault().post(StringConstant.Event_RefreshWordList);
+            }
+        });
     }
 
     @Override
     protected void initData() {
         wordBean = (WordBean) getIntent().getSerializableExtra("word");
+        if (!wordBean.getIsRemember()) {
+            headerView.setRightText("已记");
+        }
         contentTv.setText(wordBean.getContent());
         addNewMean(wordBean.getMeans());
         if (TextUtils.isEmpty(wordBean.getExampleEn())

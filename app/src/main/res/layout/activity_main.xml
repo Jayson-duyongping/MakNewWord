@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/tabs_rg" />
+
     <RadioGroup
         android:id="@+id/tabs_rg"
         android:layout_width="match_parent"
@@ -23,16 +24,19 @@
             android:id="@+id/today_tab"
             style="@style/TabRadioButton"
             android:checked="true"
+            android:drawableTop="@drawable/selector_tab_sentence"
             android:text="记句" />
 
         <RadioButton
             android:id="@+id/record_tab"
             style="@style/TabRadioButton"
+            android:drawableTop="@drawable/selector_tab_word"
             android:text="记词" />
 
         <RadioButton
             android:id="@+id/contact_tab"
             style="@style/TabRadioButton"
+            android:drawableTop="@drawable/selector_tab_mine"
             android:text="我的" />
     </RadioGroup>
 </RelativeLayout>

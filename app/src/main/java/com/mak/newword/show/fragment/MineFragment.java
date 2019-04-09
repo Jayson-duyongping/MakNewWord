@@ -1,8 +1,12 @@
 package com.mak.newword.show.fragment;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -14,12 +18,15 @@ import com.mak.newword.R;
 import com.mak.newword.base.BaseFragment;
 import com.mak.newword.greendao.service.UserService;
 import com.mak.newword.mvp.model.UserBean;
+import com.mak.newword.show.activity.CommentActivity;
 import com.mak.newword.utils.PopupWindowUtil;
 
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 /**
  * 我的Fragment
@@ -80,7 +87,7 @@ public class MineFragment extends BaseFragment {
         dayRememberTv.setText("0/" + userBean.getRememberTotalNum());
     }
 
-    @OnClick({R.id.day_record_card, R.id.day_remember_card})
+    @OnClick({R.id.day_record_card, R.id.day_remember_card, R.id.comment_ll, R.id.setting_ll})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.day_record_card:
@@ -88,6 +95,12 @@ public class MineFragment extends BaseFragment {
                 break;
             case R.id.day_remember_card:
                 showPlanPop(1);
+                break;
+            case R.id.comment_ll:
+                Intent intent = new Intent(getContext(), CommentActivity.class);
+                getContext().startActivity(intent);
+                break;
+            case R.id.setting_ll:
                 break;
         }
     }

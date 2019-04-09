@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CircleImageView">
+        <attr name="border_width" format="dimension" />
+        <attr name="border_color" format="color" />
+        <attr name="border_overlay" format="boolean" />
+    </declare-styleable>
+
+    <attr name="styleLoadingLayout" format="reference" />
+    <declare-styleable name="LoadingLayout">
+        <attr name="llEmptyResId" format="reference" />
+        <attr name="llLoadingResId" format="reference" />
+        <attr name="llErrorResId" format="reference" />
+        <attr name="llEmptyCommonsResId" format="reference" />
+        <attr name="llEmptyMsgResId" format="reference" />
+        <attr name="llEmptyOrderResId" format="reference" />
+        <attr name="llEmptySearchResId" format="reference" />
+        <attr name="llEmptyImage" format="reference" />
+        <attr name="llEmptyText" format="string" />
+        <attr name="llEmptyText_house" format="string" />
+        <attr name="llEmptyTip_house" format="string" />
+        <attr name="llEmptyText_filter" format="string" />
+        <attr name="llErrorImage" format="reference" />
+        <attr name="llErrorText" format="string" />
+        <attr name="llRetryText" format="string" />
+        <attr name="llTextColor" format="color" />
+        <attr name="llTextSize" format="dimension" />
+        <attr name="llButtonTextColor" format="color" />
+        <attr name="llButtonTextSize" format="dimension" />
+        <attr name="llButtonBackground" format="reference" />
+    </declare-styleable>
+    <item name="empty_image" type="id" />
+    <item name="empty_text" type="id" />
+    <item name="error_image" type="id" />
+    <item name="error_text" type="id" />
+    <item name="retry_button" type="id" />
+
+    <style name="LoadingLayout"></style>
+
+    <style name="LoadingLayout.Style">
+        <item name="llEmptyResId">@layout/_loading_empty</item>
+        <item name="llLoadingResId">@layout/_loading_empty</item>
+        <item name="llErrorResId">@layout/_loading_empty</item>
+        <item name="llTextColor">#DFDFDF</item>
+        <item name="llTextSize">16sp</item>
+        <item name="llButtonTextColor">#ffffff</item>
+        <item name="llButtonTextSize">18sp</item>
+        <item name="llEmptyText">空无一物</item>
+        <item name="llEmptyText_house">空无一物</item>
+        <item name="llEmptyTip_house">请前往首页获取</item>
+        <item name="llEmptyText_filter">在你选择的条件下，没有找到相关的商品哦</item>
+        <item name="llErrorText">加载失败，请检查网络～</item>
+        <item name="llRetryText">重新加载</item>
+    </style>
+</resources>

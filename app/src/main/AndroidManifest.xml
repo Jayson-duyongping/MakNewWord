@@ -12,16 +12,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".HomeActivity">
+        <activity android:name=".show.activity.CommentActivity"></activity>
+        <activity android:name=".show.activity.LaunchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".HomeActivity" />
         <activity android:name=".show.activity.AddWordActivity" />
         <activity android:name=".show.activity.WordDetailActivity" />
-        <activity android:name=".show.activity.SentenceDetailActivity"></activity>
+        <activity android:name=".show.activity.SentenceDetailActivity" />
     </application>
 
 </manifest>

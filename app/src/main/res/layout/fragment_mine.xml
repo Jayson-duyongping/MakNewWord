@@ -67,7 +67,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="49dp"
+                android:drawableLeft="@mipmap/icon_plan"
+                android:drawablePadding="10dp"
                 android:gravity="center_vertical"
+                android:textColor="@color/black"
+                android:textSize="16sp"
                 android:paddingLeft="@dimen/window_padding"
                 android:paddingRight="@dimen/window_padding"
                 android:text="制定计划" />
@@ -86,7 +90,7 @@
                         android:id="@+id/day_record_card"
                         android:layout_width="100dp"
                         android:layout_height="130dp"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
                         app:cardBackgroundColor="#7171C6"
                         app:cardCornerRadius="5dp"
@@ -148,6 +152,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/comment_ll"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@color/white"
@@ -157,9 +162,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="49dp"
+                android:drawableLeft="@mipmap/icon_comment"
+                android:drawablePadding="10dp"
                 android:gravity="center_vertical"
                 android:paddingLeft="@dimen/window_padding"
                 android:paddingRight="@dimen/window_padding"
+                android:textColor="@color/black"
+                android:textSize="16sp"
                 android:text="意见反馈" />
 
             <View
@@ -170,6 +179,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/setting_ll"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@color/white"
@@ -179,9 +189,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="49dp"
+                android:drawableLeft="@mipmap/icon_set"
+                android:drawablePadding="10dp"
                 android:gravity="center_vertical"
                 android:paddingLeft="@dimen/window_padding"
                 android:paddingRight="@dimen/window_padding"
+                android:textColor="@color/black"
+                android:textSize="16sp"
                 android:text="设置" />
 
             <View

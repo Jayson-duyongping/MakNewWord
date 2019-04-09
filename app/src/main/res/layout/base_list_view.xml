@@ -14,11 +14,17 @@
         app:srlEnableFooterFollowWhenLoadFinished="true"
         app:srlEnableScrollContentWhenLoaded="true">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/list_recyclerView"
+        <com.mak.newword.widget.LoadingLayout
+            android:id="@+id/load_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:overScrollMode="never"
-            tools:listitem="@android:layout/simple_list_item_2" />
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/list_recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:overScrollMode="never"
+                tools:listitem="@android:layout/simple_list_item_2" />
+        </com.mak.newword.widget.LoadingLayout>
     </com.jayson.commonlib.widget.smartrefresh.SmartRefreshLayout>
 </LinearLayout>

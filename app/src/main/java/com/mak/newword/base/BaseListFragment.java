@@ -15,6 +15,7 @@ import com.jayson.commonlib.widget.smartrefresh.api.RefreshLayout;
 import com.jayson.commonlib.widget.smartrefresh.listener.OnLoadMoreListener;
 import com.jayson.commonlib.widget.smartrefresh.listener.OnRefreshListener;
 import com.mak.newword.R;
+import com.mak.newword.widget.LoadingLayout;
 
 import butterknife.BindView;
 
@@ -28,6 +29,9 @@ public abstract class BaseListFragment extends BaseFragment implements OnRefresh
     SmartRefreshLayout mSmartRefreshLayout;
     @BindView(R.id.list_recyclerView)
     RecyclerView mRecyclerView;
+
+    @BindView(R.id.load_layout)
+    LoadingLayout loadingLayout;
 
     //当前页
     protected int currentPage = 1;
@@ -233,6 +237,7 @@ public abstract class BaseListFragment extends BaseFragment implements OnRefresh
      */
     protected void showEmpty(int emptyType) {
         isListContent = false;
+        loadingLayout.showEmpty(1);
         mSmartRefreshLayout.setEnableRefresh(true);
         mSmartRefreshLayout.setEnableLoadMore(false);
     }
@@ -242,6 +247,7 @@ public abstract class BaseListFragment extends BaseFragment implements OnRefresh
      */
     protected void showContent() {
         isListContent = true;
+        loadingLayout.showContent();
         mSmartRefreshLayout.setEnableRefresh(true);
         if (isCanLoadMore) {
             mSmartRefreshLayout.setEnableLoadMore(true);
