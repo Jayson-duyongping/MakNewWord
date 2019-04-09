@@ -1,4 +1,5 @@
 package com.mak.newword.show.fragment;
+
 import android.support.v4.app.FragmentTransaction;
 import android.widget.LinearLayout;
 
@@ -6,6 +7,9 @@ import com.mak.newword.HomeActivity;
 import com.mak.newword.R;
 import com.mak.newword.base.BaseFragment;
 import com.mak.newword.show.fragment.list.Frag_SentenceList;
+
+import java.util.Arrays;
+import java.util.List;
 
 import butterknife.BindView;
 

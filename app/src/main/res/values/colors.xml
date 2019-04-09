@@ -21,4 +21,5 @@
 
     <color name="darker_gray">#0Aaaaaaa</color><!--一个小阴影 -->
     <color name="gray_line">#F5F5F5</color>
+    <color name="color_lan">#4876FF</color>
 </resources>

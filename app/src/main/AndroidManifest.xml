@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mak.newword">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".application.WordApp"
         android:allowBackup="true"
@@ -17,7 +19,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".show.activity.AddWordActivity"></activity>
+        <activity android:name=".show.activity.AddWordActivity" />
+        <activity android:name=".show.activity.WordDetailActivity" />
+        <activity android:name=".show.activity.SentenceDetailActivity"></activity>
     </application>
 
 </manifest>

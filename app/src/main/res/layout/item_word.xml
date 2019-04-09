@@ -26,7 +26,7 @@
                 android:layout_marginBottom="10dp"
                 android:text="poem"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/word_mean_tv"
@@ -47,7 +47,7 @@
                 android:id="@+id/edit_tv"
                 android:layout_width="69dp"
                 android:layout_height="match_parent"
-                android:background="#4876FF"
+                android:background="@color/color_lan"
                 android:gravity="center"
                 android:text="编辑"
                 android:textColor="#ffffff"

@@ -28,6 +28,7 @@ public abstract class BaseListFragment extends BaseFragment implements OnRefresh
     SmartRefreshLayout mSmartRefreshLayout;
     @BindView(R.id.list_recyclerView)
     RecyclerView mRecyclerView;
+
     //当前页
     protected int currentPage = 1;
     //

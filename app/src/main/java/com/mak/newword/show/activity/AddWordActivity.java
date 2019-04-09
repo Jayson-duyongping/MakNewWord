@@ -24,8 +24,8 @@ import com.mak.newword.mvp.model.MeanBean;
 import com.mak.newword.mvp.model.WordBean;
 import com.mak.newword.utils.ToastUtils;
 import com.mak.newword.widget.HeaderView;
-import com.mak.newword.widget.RoundImageView;
 import com.mak.newword.widget.SpinerPopWindow;
+
 
 import org.greenrobot.eventbus.EventBus;
 

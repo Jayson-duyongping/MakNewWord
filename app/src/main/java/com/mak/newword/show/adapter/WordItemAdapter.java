@@ -13,6 +13,7 @@ import com.mak.newword.greendao.service.WordService;
 import com.mak.newword.mvp.model.MeanBean;
 import com.mak.newword.mvp.model.WordBean;
 import com.mak.newword.show.activity.AddWordActivity;
+import com.mak.newword.show.activity.WordDetailActivity;
 import com.mak.newword.utils.ToastUtils;
 import com.mak.newword.widget.SmartViewHolder;
 import com.mak.newword.widget.SwipeMenuLayout;
@@ -65,7 +66,9 @@ public class WordItemAdapter extends BaseRecyclerAdapter<WordBean> {
         contentLl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(context, WordDetailActivity.class);
+                intent.putExtra("word", model);
+                context.startActivity(intent);
             }
         });
         //编辑内容

@@ -11,4 +11,36 @@
         <item>prep.</item>
         <item>conj.</item>
     </string-array>
+    <string-array name="sentence_local">
+        <item>https://cdn.pixabay.com/photo/2016/11/23/14/53/book-1853348_960_720.jpg##local##There is no royal road to learning.##local##书山有路勤为径,学海无涯苦作舟。</item>
+        <item>A man becomes learned by asking questions.##local##不耻下问。</item>
+        <item>https://cdn.pixabay.com/photo/2016/06/20/03/21/rainbow-1467988_960_720.jpg##local##No cross, no crown.##local##不经历风雨，怎能见彩虹。</item>
+        <item>A good beginning makes a good ending.##local##良好的开端就是成功的一半。 善始者善终。</item>
+        <item>No matter how bad your heart has been broken, the world doesn’t stop for your grief. The sun comes right back up the next day.##local##不管你有多痛苦，这个世界都不会为你停止转动。太阳照样升起。</item>
+        <item>Experience is the mother of wisdom.##local##实践出真知。</item>
+        <item>Don’t trouble trouble until trouble troubles you.##local##不要自寻烦恼。</item>
+        <item>Everybody dies, but not everybody lives.##local##人人都会死，但非人人都曾活过。</item>
+        <item>Doing is better than saying.##local##行胜于言。</item>
+        <item>Commitment in many, can do. It is just a lie.##local##承诺再多，都做不到。那也只不是是谎言。</item>
+        <item>It is never too old to learn.##local##活到老，学到老。</item>
+        <item>Birds of a feather flock together.##local##物以类聚，人以群分。</item>
+        <item>An idle youth, a needy age.##local##少壮不努力,老大徒伤悲。</item>
+        <item>Genius only means hard-working all one's life.##local##天才只意味着终身不懈地努力。</item>
+        <item>Cease to struggle and you cease to live.##local##生命不止，奋斗不息。</item>
+        <item>Living without an aim is like sailing without a compass.##local##生活没有目标，犹如航海没有罗盘。</item>
+        <item>The secret of success is constancy to purpose.##local##成功的秘密在于始终如一地忠于目标。</item>
+        <item>https://cdn.pixabay.com/photo/2018/05/22/14/00/girl-3421489_960_720.jpg##local##The first wealth is health .##local##健康是人生第一财富。</item>
+        <item>What makes life dreary is the want of motive.##local##失去目标，生活会变得乏味。</item>
+        <item>That man is the richest whose pleasure are the cheapest.##local##快乐的人才是最富有的人。</item>
+        <item>No sweat,no sweet.##local##一分耕耘,一分收获。</item>
+        <item>No one can call back yesterday.##local##光阴一去不复返。</item>
+        <item>No man is content.##local##人心不足蛇吞象。</item>
+        <item>No man can do two things at once.##local##一心不可二用。</item>
+        <item>No joy without annoy.##local##祸福相依。</item>
+        <item>No great loss without some small gain.##local##塞翁失马,安知非福。</item>
+        <item>Never too old to learn.##local##活到老,学到老。</item>
+        <item>Never say of another what you would not have him hear.##local##千万别说不该说的话。</item>
+        <item>Never put off till tomorrow what may be done today.##local##今日事,今日毕。</item>
+        <item>Money talks.##local##有钱能使鬼推磨。</item>
+    </string-array>
 </resources>

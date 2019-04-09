@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="10dp"
-    android:background="@color/head_back"
     android:orientation="horizontal">
 
     <TextView
@@ -13,7 +12,6 @@
         android:layout_marginLeft="10dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/shape_edit_bg"
-        android:drawableRight="@mipmap/out"
         android:gravity="center"
         android:text="选择词性"
         android:textColor="@color/gray333"
