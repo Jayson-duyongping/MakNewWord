@@ -23,6 +23,7 @@ import com.mak.newword.greendao.service.WordService;
 import com.mak.newword.mvp.model.MeanBean;
 import com.mak.newword.mvp.model.WordBean;
 import com.mak.newword.utils.ToastUtils;
+import com.mak.newword.utils.manager.StorageDayManager;
 import com.mak.newword.widget.HeaderView;
 import com.mak.newword.widget.SpinerPopWindow;
 
@@ -137,7 +138,12 @@ public class AddWordActivity extends BaseFragmentActivity {
         }
         //保存完成
         ToastUtils.showToast(mContext, "保存成功");
+        //记录本地一个
+        StorageDayManager.getInstance(mContext)
+                .handlerDayNumber(StringConstant.Share_Record_Count);
+        //刷新界面和更新记录个数
         EventBus.getDefault().post(StringConstant.Event_RefreshWordList);
+        EventBus.getDefault().post(StringConstant.Event_UpdateDayNumber);
         this.finish();
     }
 

@@ -12,8 +12,11 @@ import com.jayson.commonlib.widget.smartrefresh.api.RefreshLayout;
 import com.jayson.commonlib.widget.smartrefresh.footer.ClassicsFooter;
 import com.jayson.commonlib.widget.smartrefresh.header.ClassicsHeader;
 import com.mak.newword.R;
+import com.mak.newword.greendao.service.UserService;
+import com.mak.newword.mvp.model.UserBean;
 
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -29,6 +32,31 @@ public class WordApp extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
+    }
+
+    /**
+     * 获取用户信息
+     *
+     * @return
+     */
+    public UserBean getUser() {
+        UserBean userBean;
+        long count = UserService.getInstance(getApplicationContext()).queryUserListCount();
+        if (count == 0) {
+            //新建一个用户
+            userBean = new UserBean();
+            userBean.setName("英语学习者");
+            userBean.setRecordDayNum(0);
+            userBean.setRememberDayNum(0);
+            userBean.setRecordTotalNum(50);
+            userBean.setRememberTotalNum(30);
+            UserService.getInstance(getApplicationContext()).insertUser(userBean);
+        } else {
+            //获取数据库的用户
+            List<UserBean> users = UserService.getInstance(getApplicationContext()).queryUserList();
+            userBean = users.get(0);
+        }
+        return userBean;
     }
 
     /**

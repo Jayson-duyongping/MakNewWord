@@ -12,7 +12,10 @@ import com.mak.newword.constant.StringConstant;
 import com.mak.newword.greendao.service.WordService;
 import com.mak.newword.mvp.model.MeanBean;
 import com.mak.newword.mvp.model.WordBean;
+import com.mak.newword.utils.DateUtils;
+import com.mak.newword.utils.SharedPreHelper;
 import com.mak.newword.utils.ToastUtils;
+import com.mak.newword.utils.manager.StorageDayManager;
 import com.mak.newword.widget.HeaderView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -60,6 +63,11 @@ public class WordDetailActivity extends BaseFragmentActivity {
                 WordService.getInstance(mContext).updateWord(wordBean);
                 ToastUtils.showToast(mContext, "已标记为已记");
                 EventBus.getDefault().post(StringConstant.Event_RefreshWordList);
+                //存一个当日记忆数到本地
+                StorageDayManager.getInstance(mContext)
+                        .handlerDayNumber(StringConstant.Share_Remember_Count);
+                //刷新MineFragment中的计划卡
+                EventBus.getDefault().post(StringConstant.Event_UpdateDayNumber);
             }
         });
     }

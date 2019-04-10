@@ -15,18 +15,19 @@ import android.widget.TextView;
 
 import com.mak.newword.HomeActivity;
 import com.mak.newword.R;
+import com.mak.newword.application.WordApp;
 import com.mak.newword.base.BaseFragment;
+import com.mak.newword.constant.StringConstant;
 import com.mak.newword.greendao.service.UserService;
 import com.mak.newword.mvp.model.UserBean;
 import com.mak.newword.show.activity.CommentActivity;
 import com.mak.newword.utils.PopupWindowUtil;
+import com.mak.newword.utils.manager.StorageDayManager;
 
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 /**
  * 我的Fragment
@@ -67,24 +68,11 @@ public class MineFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-        long count = UserService.getInstance(getContext()).queryUserListCount();
-        if (count == 0) {
-            //新建一个用户
-            userBean = new UserBean();
-            userBean.setName("英语学习者");
-            userBean.setRecordDayNum(0);
-            userBean.setRememberDayNum(0);
-            userBean.setRecordTotalNum(50);
-            userBean.setRememberTotalNum(30);
-            UserService.getInstance(getContext()).insertUser(userBean);
-        } else {
-            //获取数据库的用户
-            List<UserBean> users = UserService.getInstance(getContext()).queryUserList();
-            userBean = users.get(0);
-        }
+        //获取用户信息
+        userBean = WordApp.instance.getUser();
+        //设置
         userNameTv.setText(userBean.getName());
-        dayRecordTv.setText("0/" + userBean.getRecordTotalNum());
-        dayRememberTv.setText("0/" + userBean.getRememberTotalNum());
+        updateDayNumber();
     }
 
     @OnClick({R.id.day_record_card, R.id.day_remember_card, R.id.comment_ll, R.id.setting_ll})
@@ -103,6 +91,18 @@ public class MineFragment extends BaseFragment {
             case R.id.setting_ll:
                 break;
         }
+    }
+
+    /**
+     * 刷新计划卡
+     */
+    public void updateDayNumber() {
+        int recordNum = StorageDayManager.getInstance(getContext())
+                .getRememberNum(StringConstant.Share_Record_Count);
+        int rememberNum = StorageDayManager.getInstance(getContext())
+                .getRememberNum(StringConstant.Share_Remember_Count);
+        dayRecordTv.setText(recordNum + "/" + userBean.getRecordTotalNum());
+        dayRememberTv.setText(rememberNum + "/" + userBean.getRememberTotalNum());
     }
 
     /**
@@ -130,14 +130,14 @@ public class MineFragment extends BaseFragment {
                         recordNum = Integer.parseInt(planNumEt.getText().toString());
                         userBean.setRecordTotalNum(recordNum);
                         UserService.getInstance(getContext()).updateUser(userBean);
-                        dayRecordTv.setText("0/" + recordNum);
+                        updateDayNumber();
                     }
                 } else {
                     if (!TextUtils.isEmpty(planNumEt.getText().toString())) {
                         rememberNum = Integer.parseInt(planNumEt.getText().toString());
                         userBean.setRememberTotalNum(rememberNum);
                         UserService.getInstance(getContext()).updateUser(userBean);
-                        dayRememberTv.setText("0/" + rememberNum);
+                        updateDayNumber();
                     }
                 }
             }

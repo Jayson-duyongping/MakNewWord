@@ -147,6 +147,12 @@ public class HomeActivity extends BaseFragmentActivity {
                     wordFragment.refreshList();
                 }
                 break;
+            //刷新计划卡
+            case StringConstant.Event_UpdateDayNumber:
+                if (mineFragment != null) {
+                    mineFragment.updateDayNumber();
+                }
+                break;
         }
     }
 
