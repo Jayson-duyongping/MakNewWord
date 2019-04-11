@@ -92,7 +92,7 @@
                         android:layout_height="130dp"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
-                        app:cardBackgroundColor="#7171C6"
+                        app:cardBackgroundColor="@color/color_lan1"
                         app:cardCornerRadius="5dp"
                         app:cardElevation="5dp">
 
@@ -120,7 +120,7 @@
                         android:layout_height="130dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="20dp"
-                        app:cardBackgroundColor="#7171C6"
+                        app:cardBackgroundColor="@color/color_lan1"
                         app:cardCornerRadius="5dp"
                         app:cardElevation="5dp">
 

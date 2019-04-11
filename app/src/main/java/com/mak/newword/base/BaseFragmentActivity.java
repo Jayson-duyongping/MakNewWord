@@ -1,10 +1,13 @@
 package com.mak.newword.base;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
@@ -245,4 +248,17 @@ public abstract class BaseFragmentActivity<T> extends RxFragmentActivity impleme
         return body;
     }
 
+    /**
+     * 检测网络是否可用
+     *
+     * @return
+     */
+    public boolean isNetworkConnected(Context context) {
+        if (null == context)
+            return false;
+        ConnectivityManager cm = (ConnectivityManager) context
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        @SuppressLint("MissingPermission") NetworkInfo ni = cm.getActiveNetworkInfo();
+        return ni != null && ni.isConnectedOrConnecting();
+    }
 }

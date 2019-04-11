@@ -135,15 +135,16 @@ public class AddWordActivity extends BaseFragmentActivity {
         } else {
             //新增
             WordService.getInstance(mContext).insertWord(wordBean);
+            //记录本地一个
+            StorageDayManager.getInstance(mContext)
+                    .handlerDayNumber(StringConstant.Share_Record_Count);
+            //更新记录个数
+            EventBus.getDefault().post(StringConstant.Event_UpdateDayNumber);
         }
         //保存完成
         ToastUtils.showToast(mContext, "保存成功");
-        //记录本地一个
-        StorageDayManager.getInstance(mContext)
-                .handlerDayNumber(StringConstant.Share_Record_Count);
-        //刷新界面和更新记录个数
+        //刷新界面
         EventBus.getDefault().post(StringConstant.Event_RefreshWordList);
-        EventBus.getDefault().post(StringConstant.Event_UpdateDayNumber);
         this.finish();
     }
 

@@ -103,6 +103,18 @@ public class MineFragment extends BaseFragment {
                 .getRememberNum(StringConstant.Share_Remember_Count);
         dayRecordTv.setText(recordNum + "/" + userBean.getRecordTotalNum());
         dayRememberTv.setText(rememberNum + "/" + userBean.getRememberTotalNum());
+        if (recordNum >= userBean.getRecordTotalNum()) {
+            //记录计划已经满了
+            dayRecordCard.setCardBackgroundColor(getContext().getResources().getColor(R.color.color_orange));
+        } else {
+            dayRecordCard.setCardBackgroundColor(getContext().getResources().getColor(R.color.color_lan1));
+        }
+        if (rememberNum >= userBean.getRememberTotalNum()) {
+            //记忆计划已经满了
+            dayRememberCard.setCardBackgroundColor(getResources().getColor(R.color.color_orange));
+        } else {
+            dayRememberCard.setCardBackgroundColor(getResources().getColor(R.color.color_lan1));
+        }
     }
 
     /**
