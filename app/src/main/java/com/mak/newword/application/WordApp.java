@@ -3,6 +3,7 @@ package com.mak.newword.application;
 import android.app.Application;
 import android.content.Context;
 
+import com.avos.avoscloud.AVOSCloud;
 import com.jayson.commonlib.widget.smartrefresh.SmartRefreshLayout;
 import com.jayson.commonlib.widget.smartrefresh.api.DefaultRefreshFooterCreator;
 import com.jayson.commonlib.widget.smartrefresh.api.DefaultRefreshHeaderCreator;
@@ -32,6 +33,10 @@ public class WordApp extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
+        /**
+         * MAK - AVOSCloud初始化-参数依次为 this, AppId, AppKey
+         */
+        AVOSCloud.initialize(this, "4maGo9tHHbDdlPGLd8jwxkh8-gzGzoHsz", "VQnIYDvroOtYcxLrPD7oILuV");
     }
 
     /**

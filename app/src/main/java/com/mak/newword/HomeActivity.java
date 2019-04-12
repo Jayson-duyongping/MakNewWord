@@ -1,5 +1,6 @@
 package com.mak.newword;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
@@ -16,7 +17,6 @@ import com.mak.newword.constant.StringConstant;
 import com.mak.newword.show.fragment.MineFragment;
 import com.mak.newword.show.fragment.SentenceFragment;
 import com.mak.newword.show.fragment.WordFragment;
-import com.mak.newword.utils.ToastUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

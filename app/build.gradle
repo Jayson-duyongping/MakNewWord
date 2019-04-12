@@ -16,6 +16,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
 }
 
 greendao {
@@ -52,4 +56,12 @@ dependencies {
     implementation 'org.greenrobot:eventbus:3.1.1'
     //glide
     implementation 'com.github.bumptech.glide:glide:3.5.2'
+
+    //MAK-cloud控制平台
+    implementation 'cn.leancloud.android:avoscloud-sdk:v4.4.4'
+    //MAK-app下载更新
+    implementation 'com.qianwen:update-app:3.5.2'
+    implementation 'com.qianwen:okhttp-utils:3.8.0'
+    //MAK-webView
+    implementation 'com.just.agentweb:agentweb:2.0.1'
 }
