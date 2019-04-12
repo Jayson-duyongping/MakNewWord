@@ -13,7 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <!--集成了MAK相关之后，在Android9.0会出现NoClassDefFoundError，加入legacy-->
+        <!--集成了MAK相关之后，在Android9.0会出现NoClassDefFoundError，加入legacy -->
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
