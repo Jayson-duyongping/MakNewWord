@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.mak.newword.base.BaseFragmentActivity;
 import com.mak.newword.constant.StringConstant;
+import com.mak.newword.show.fragment.CibaFragment;
 import com.mak.newword.show.fragment.MineFragment;
 import com.mak.newword.show.fragment.SentenceFragment;
 import com.mak.newword.show.fragment.WordFragment;
@@ -41,6 +42,7 @@ public class HomeActivity extends BaseFragmentActivity {
 
     SentenceFragment sentenceFragment;
     WordFragment wordFragment;
+    CibaFragment cibaFragment;
     MineFragment mineFragment;
 
 
@@ -57,9 +59,11 @@ public class HomeActivity extends BaseFragmentActivity {
         mFragments = new ArrayList<>(3);
         sentenceFragment = new SentenceFragment();
         wordFragment = new WordFragment();
+        cibaFragment = new CibaFragment();
         mineFragment = new MineFragment();
         mFragments.add(sentenceFragment);
         mFragments.add(wordFragment);
+        mFragments.add(cibaFragment);
         mFragments.add(mineFragment);
         // init view pager
         mAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager(), mFragments);

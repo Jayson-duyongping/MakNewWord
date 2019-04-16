@@ -1,0 +1,58 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ciba_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/head_back"
+    android:orientation="vertical"
+    tools:context="com.mak.newword.show.fragment.CibaFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/head_height"
+        android:background="@color/head_back"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/window_padding"
+        android:paddingRight="@dimen/window_padding">
+
+        <EditText
+            android:id="@+id/search_et"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:background="@drawable/border_white_bg"
+            android:drawableLeft="@mipmap/icon_search_gray"
+            android:drawablePadding="10dp"
+            android:focusable="true"
+            android:hint="查词"
+            android:imeOptions="actionSearch"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:singleLine="true"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ciba_content_ll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="@dimen/window_padding">
+
+        <TextView
+            android:id="@+id/word_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="poem"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <LinearLayout
+            android:id="@+id/symbols_container_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"></LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

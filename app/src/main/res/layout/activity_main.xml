@@ -32,7 +32,11 @@
             style="@style/TabRadioButton"
             android:drawableTop="@drawable/selector_tab_word"
             android:text="记词" />
-
+        <RadioButton
+            android:id="@+id/query_tab"
+            style="@style/TabRadioButton"
+            android:drawableTop="@drawable/selector_tab_word"
+            android:text="查词" />
         <RadioButton
             android:id="@+id/contact_tab"
             style="@style/TabRadioButton"
