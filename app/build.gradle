@@ -1,25 +1,65 @@
 apply plugin: 'com.android.application'
 apply plugin: 'org.greenrobot.greendao'
+
+apply from: 'tinkerpatch.gradle'
+apply plugin: 'walle'
+
 android {
     compileSdkVersion 28
+
     defaultConfig {
         applicationId "com.mak.newword"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        versionCode 10000
+        versionName "1.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions.includeCompileClasspath true
+        }
+        flavorDimensions "default"
     }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+    signingConfigs {
+        mysign {
+            storeFile rootProject.file("/app/keystore/eword.jks")
+            storePassword '123456'
+            keyAlias 'eword'
+            keyPassword '123456'
         }
     }
+
+    buildTypes {
+        release {
+            //是否开启zip优化
+            zipAlignEnabled true
+            //是否开启混淆
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //正式的签名文件
+            signingConfig signingConfigs.mysign
+        }
+    }
+
     compileOptions {
         sourceCompatibility = '1.8'
         targetCompatibility = '1.8'
     }
+    dexOptions {
+        jumboMode true
+    }
+}
+
+walle {
+    // 指定渠道包的输出路径
+    apkOutputFolder = new File("${project.buildDir}/outputs/channels")
+    // 定制渠道包的APK的文件名称
+    // ${appName}-${packageName}-${channel}-${buildType}
+    // -v${versionName}-${versionCode}-${buildTime}.apk
+    apkFileNameFormat = '简记生词本_${versionName}_${channel}_${buildType}.apk'
+    // 渠道配置文件
+    channelFile = new File("${project.getProjectDir()}/channel")
 }
 
 greendao {
@@ -39,6 +79,13 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     implementation 'com.android.support:support-v4:28.0.0'
     testImplementation 'junit:junit:4.12'
+
+    // 若使用annotation需要单独引用,对于tinker的其他库都无需再引用
+    provided("com.tinkerpatch.tinker:tinker-android-anno:1.9.9")
+    compile("com.tinkerpatch.sdk:tinkerpatch-android-sdk:1.2.9")
+    // walle依赖
+    implementation 'com.meituan.android.walle:library:1.1.6'
+
     //butterknife
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
@@ -65,3 +112,4 @@ dependencies {
     //MAK-webView
     implementation 'com.just.agentweb:agentweb:2.0.1'
 }
+

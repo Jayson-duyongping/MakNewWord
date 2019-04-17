@@ -15,6 +15,9 @@ import com.jayson.commonlib.widget.smartrefresh.header.ClassicsHeader;
 import com.mak.newword.R;
 import com.mak.newword.greendao.service.UserService;
 import com.mak.newword.mvp.model.UserBean;
+import com.tencent.tinker.entry.ApplicationLike;
+import com.tinkerpatch.sdk.TinkerPatch;
+import com.tinkerpatch.sdk.loader.TinkerPatchApplicationLike;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -29,10 +32,28 @@ import java.util.Locale;
 public class WordApp extends Application {
     public static WordApp instance;
 
+    private ApplicationLike tinkerApplicationLike;
+
     @Override
     public void onCreate() {
         super.onCreate();
         instance = this;
+        /**
+         * 我们可以从这里获得Tinker加载过程的信息
+         */
+        tinkerApplicationLike = TinkerPatchApplicationLike.getTinkerPatchApplicationLike();
+        // 初始化TinkerPatch SDK, 更多配置可参照API章节中的,初始化SDK
+        TinkerPatch.init(tinkerApplicationLike)
+                .reflectPatchLibrary()
+                .setPatchRollbackOnScreenOff(true)
+                .setPatchRestartOnSrceenOff(true)
+                .setFetchPatchIntervalByHours(1);
+
+        // 每隔3个小时(通过setFetchPatchIntervalByHours设置)
+        // 去访问后台时候有更新,通过handler实现轮训的效果
+        TinkerPatch.with().fetchPatchUpdateAndPollWithInterval();
+        // 每隔3个小时去访问后台时候有更新,通过handler实现轮训的效果
+        //new FetchPatchHandler().fetchPatchWithInterval(3);
         /**
          * MAK - AVOSCloud初始化-参数依次为 this, AppId, AppKey
          */
