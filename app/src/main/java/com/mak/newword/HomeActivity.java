@@ -8,10 +8,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
+import android.view.animation.AccelerateInterpolator;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.mak.newword.base.BaseFragmentActivity;
 import com.mak.newword.constant.StringConstant;
 import com.mak.newword.show.fragment.CibaFragment;
@@ -95,6 +98,7 @@ public class HomeActivity extends BaseFragmentActivity {
         @Override
         public void onPageSelected(int position) {
             RadioButton radioButton = (RadioButton) mTabRadioGroup.getChildAt(position);
+            YoYo.with(Techniques.Bounce).duration(300).repeat(0).playOn(radioButton);
             radioButton.setChecked(true);
         }
 
@@ -109,7 +113,8 @@ public class HomeActivity extends BaseFragmentActivity {
         public void onCheckedChanged(RadioGroup group, int checkedId) {
             for (int i = 0; i < group.getChildCount(); i++) {
                 if (group.getChildAt(i).getId() == checkedId) {
-                    mViewPager.setCurrentItem(i);
+                    //smoothScroll改成false，解决多个页面快速滑动的问题
+                    mViewPager.setCurrentItem(i, false);
                     return;
                 }
             }

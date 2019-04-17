@@ -1,5 +1,6 @@
 package com.mak.newword.show.fragment;
 
+import android.animation.Animator;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -10,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.mak.newword.HomeActivity;
 import com.mak.newword.R;
 import com.mak.newword.base.BaseFragment;
@@ -18,6 +21,7 @@ import com.mak.newword.mvp.model.BaseErrorBean;
 import com.mak.newword.mvp.model.CibaWordEnBean;
 import com.mak.newword.mvp.model.CibaWordZhBean;
 import com.mak.newword.mvp.presenter.CibaWordPresenter;
+import com.mak.newword.utils.KeybordUtil;
 import com.mak.newword.utils.StringUtil;
 import com.mak.newword.utils.ToastUtils;
 
@@ -100,6 +104,8 @@ public class CibaFragment extends BaseFragment implements ICibaWordView {
             CibaWordEnBean.SymbolsBean.PartsBean mean = symbolsBean.getParts().get(i);
             classTv.setText(mean.getPart());
             meanTv.setText(StringUtil.getBodySym(mean.getMeans().toString()));
+            //动画一下
+            YoYo.with(Techniques.BounceInLeft).duration(500).repeat(0).playOn(meanView);
             meanContainerLl.addView(meanView);
         }
         symbolsContainerLl.addView(symView);
@@ -111,8 +117,20 @@ public class CibaFragment extends BaseFragment implements ICibaWordView {
             //名字
             wordNameTv.setText(bean.getWord_name());
             symbolsContainerLl.removeAllViews();
-            for (int i = 0; i < bean.getSymbols().size(); i++) {
-                addNewMean(bean.getSymbols().get(i));
+            //动画一下
+            YoYo.with(Techniques.FadeIn).duration(500).repeat(0)
+                    .onEnd(new YoYo.AnimatorCallback() {
+                        @Override
+                        public void call(Animator animator) {
+                            //动画结束
+                            for (int i = 0; i < bean.getSymbols().size(); i++) {
+                                addNewMean(bean.getSymbols().get(i));
+                            }
+                        }
+                    }).playOn(wordNameTv);
+            //如果软键盘打开就让他关闭
+            if (KeybordUtil.isSoftInputShow(getActivity())) {
+                KeybordUtil.closeKeybord(searchEt, getContext());
             }
         }
     }

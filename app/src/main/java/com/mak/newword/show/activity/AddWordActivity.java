@@ -1,5 +1,6 @@
 package com.mak.newword.show.activity;
 
+import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ValueAnimator;
 import android.content.Intent;
@@ -15,6 +16,8 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.jayson.commonlib.widget.smartrefresh.util.DensityUtil;
 import com.mak.newword.R;
 import com.mak.newword.base.BaseFragmentActivity;
@@ -53,6 +56,8 @@ public class AddWordActivity extends BaseFragmentActivity {
 
     @BindView(R.id.content_et)
     EditText contentEt;
+    @BindView(R.id.plus_iv)
+    ImageView plusIv;
     @BindView(R.id.ex_en_et)
     EditText exEnEt;
     @BindView(R.id.ex_zh_et)
@@ -89,8 +94,18 @@ public class AddWordActivity extends BaseFragmentActivity {
                 saveWord();
             }
         });
-        tipTv.setVisibility(View.VISIBLE);
-        performVisibleAnim(tipTv, 0, 30);
+        //属性动画有点消耗性能
+        //performVisibleAnim(tipTv, 0, 30);
+        YoYo.with(Techniques.FlipInX).duration(1000).repeat(0)
+                .onEnd(new YoYo.AnimatorCallback() {
+                    @Override
+                    public void call(Animator animator) {
+                        contentEt.setVisibility(View.VISIBLE);
+                        plusIv.setVisibility(View.VISIBLE);
+                        YoYo.with(Techniques.FlipInX).duration(1000).repeat(0).playOn(contentEt);
+                        YoYo.with(Techniques.FlipInX).duration(1000).repeat(0).playOn(plusIv);
+                    }
+                }).playOn(tipTv);
     }
 
     /**
@@ -157,6 +172,8 @@ public class AddWordActivity extends BaseFragmentActivity {
         //编辑页面
         wordBean = (WordBean) getIntent().getSerializableExtra("word");
         if (wordBean != null) {
+            contentEt.setVisibility(View.VISIBLE);
+            plusIv.setVisibility(View.VISIBLE);
             setEditView(wordBean);
         }
     }

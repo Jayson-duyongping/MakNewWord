@@ -16,14 +16,14 @@
     <TextView
         android:id="@+id/tip_tv"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
         android:background="#22A2CD5A"
         android:gravity="center"
+        android:textSize="16sp"
         android:text="美好的一天从记单词开始！"
-        android:textColor="#ADFF2F"
-        android:visibility="gone" />
+        android:textColor="#ADFF2F"/>
 
     <EditText
         android:id="@+id/content_et"
@@ -32,6 +32,7 @@
         android:layout_margin="@dimen/window_padding"
         android:background="@drawable/shape_edit_bg"
         android:hint="生词"
+        android:visibility="gone"
         android:paddingLeft="10dp"
         android:paddingRight="10dp" />
 
@@ -46,6 +47,7 @@
             android:id="@+id/plus_iv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:src="@mipmap/plus" />
 
         <LinearLayout

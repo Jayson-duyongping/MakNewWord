@@ -1,18 +1,17 @@
 package com.mak.newword.show.fragment;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.mak.newword.HomeActivity;
 import com.mak.newword.R;
 import com.mak.newword.application.WordApp;
@@ -24,7 +23,6 @@ import com.mak.newword.show.activity.CommentActivity;
 import com.mak.newword.utils.PopupWindowUtil;
 import com.mak.newword.utils.manager.StorageDayManager;
 
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -156,6 +154,11 @@ public class MineFragment extends BaseFragment {
         });
         if (planPop == null) {
             planPop = PopupWindowUtil.getPopWindowForCenter(getActivity(), planPopView);
+            //动画一下
+            YoYo.with(Techniques.BounceIn)
+                    .duration(500)
+                    .repeat(0)
+                    .playOn(planPopView);
             planPop.setOnDismissListener(new PopupWindow.OnDismissListener() {
                 @Override
                 public void onDismiss() {

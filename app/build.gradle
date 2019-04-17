@@ -18,7 +18,6 @@ android {
         javaCompileOptions {
             annotationProcessorOptions.includeCompileClasspath true
         }
-        flavorDimensions "default"
     }
 
     signingConfigs {
@@ -80,10 +79,10 @@ dependencies {
     implementation 'com.android.support:support-v4:28.0.0'
     testImplementation 'junit:junit:4.12'
 
-    // 若使用annotation需要单独引用,对于tinker的其他库都无需再引用
+    // tinker依赖，若使用annotation需要单独引用,对于tinker的其他库都无需再引用
     provided("com.tinkerpatch.tinker:tinker-android-anno:1.9.9")
     compile("com.tinkerpatch.sdk:tinkerpatch-android-sdk:1.2.9")
-    // walle依赖
+    // walle依赖(多渠道打包)
     implementation 'com.meituan.android.walle:library:1.1.6'
 
     //butterknife
@@ -103,6 +102,11 @@ dependencies {
     implementation 'org.greenrobot:eventbus:3.1.1'
     //glide
     implementation 'com.github.bumptech.glide:glide:3.5.2'
+    //AndroidViewAnimations动画库
+    //https://github.com/daimajia/AndroidViewAnimations
+    implementation 'com.android.support:support-compat:28.0.0'
+    implementation 'com.daimajia.easing:library:2.0@aar'
+    implementation 'com.daimajia.androidanimations:library:2.3@aar'
 
     //MAK-cloud控制平台
     implementation 'cn.leancloud.android:avoscloud-sdk:v4.4.4'
@@ -111,5 +115,6 @@ dependencies {
     implementation 'com.qianwen:okhttp-utils:3.8.0'
     //MAK-webView
     implementation 'com.just.agentweb:agentweb:2.0.1'
+
 }
 

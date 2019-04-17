@@ -6,15 +6,20 @@
 
     <TextView
         android:id="@+id/class_tv"
-        android:layout_width="60dp"
-        android:layout_marginBottom="5dp"
+        android:layout_width="40dp"
+        android:layout_marginBottom="8dp"
         android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textStyle="italic"
         android:text="词性" />
 
     <TextView
         android:id="@+id/mean_tv"
         android:layout_width="match_parent"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="8dp"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:textStyle="bold"
         android:layout_height="wrap_content"
         android:text="意思" />
 </LinearLayout>
