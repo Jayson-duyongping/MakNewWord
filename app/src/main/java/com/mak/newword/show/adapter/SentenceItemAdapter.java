@@ -46,7 +46,7 @@ public class SentenceItemAdapter extends BaseRecyclerAdapter<SentenceBean> {
         enContentTv.setText(model.getEnContent());
         if (!TextUtils.isEmpty(model.getImgUrl())) {
             imgTv.setVisibility(View.VISIBLE);
-            Glide.with(context).load(model.getImgUrl()).into(imgTv);
+            Glide.with(context).load(model.getImgUrl()).placeholder(R.mipmap.place46).into(imgTv);
         } else {
             imgTv.setVisibility(View.GONE);
         }

@@ -15,6 +15,7 @@ import com.jayson.commonlib.widget.smartrefresh.header.ClassicsHeader;
 import com.mak.newword.R;
 import com.mak.newword.greendao.service.UserService;
 import com.mak.newword.mvp.model.UserBean;
+import com.meituan.android.walle.WalleChannelReader;
 import com.tencent.tinker.entry.ApplicationLike;
 import com.tinkerpatch.sdk.TinkerPatch;
 import com.tinkerpatch.sdk.loader.TinkerPatchApplicationLike;
@@ -33,6 +34,15 @@ public class WordApp extends Application {
     public static WordApp instance;
 
     private ApplicationLike tinkerApplicationLike;
+
+    /**
+     * 获取渠道号
+     * 360加固后会擦出渠道信息，需要使用ProtectedApkResignerForWalle再次打包
+     * @return
+     */
+    public String getChannel() {
+        return WalleChannelReader.getChannel(getApplicationContext());
+    }
 
     @Override
     public void onCreate() {

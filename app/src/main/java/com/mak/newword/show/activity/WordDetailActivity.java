@@ -112,9 +112,9 @@ public class WordDetailActivity extends BaseFragmentActivity {
             return;
         }
         for (int i = 0; i < means.size(); i++) {
-            final View gameView = LayoutInflater.from(mContext).inflate(R.layout.item_word_mean_show, null);
+            final View gameView = LayoutInflater.from(mContext).inflate(R.layout.item_ciba_mean, null);
             final TextView classTv = gameView.findViewById(R.id.class_tv);
-            final TextView meanTv = gameView.findViewById(R.id.mean_et);
+            final TextView meanTv = gameView.findViewById(R.id.mean_tv);
             //设置词性值
             classTv.setText(means.get(i).getClass_());
             meanTv.setText(means.get(i).getMean_());

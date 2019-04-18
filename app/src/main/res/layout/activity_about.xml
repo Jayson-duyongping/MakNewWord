@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/head_back"
+    android:orientation="vertical">
+
+    <com.mak.newword.widget.HeaderView
+        android:id="@+id/headerView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/head_height" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <com.mak.newword.widget.RoundImageView
+            android:id="@+id/app_icon_iv"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:src="@mipmap/icon_logo" />
+
+        <TextView
+            android:id="@+id/name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:text="简记忆生词本"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/version_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:text="版本号"
+            android:textSize="16sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="20dp"
+            android:alpha="0.2"
+            android:background="@color/common_edit_hint" />
+
+        <TextView
+            android:id="@+id/check_version_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFF5EE"
+            android:padding="10dp"
+            android:text="检查新版本"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:alpha="0.2"
+            android:background="@color/common_edit_hint" />
+
+        <TextView
+            android:id="@+id/info_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:lineSpacingExtra="10dp"
+            android:text="\u3000\u3000此app是一个简单易用的记单词app，您可以记词，记句，查询单词，制定计划，把您不会的单词添加到生词本，随时随地记忆。我们在添加新单词的时候，并没有给您提供只能录词的功能，我们觉得，只有您自己用心手输一遍您不会的单词，这样才会达到记忆的目的，这个app才有意义。"
+            android:textColor="@color/black" />
+    </LinearLayout>
+</LinearLayout>

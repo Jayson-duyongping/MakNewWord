@@ -13,6 +13,7 @@
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/convert_ze_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
@@ -40,32 +41,41 @@
                 android:background="@drawable/anim_yuyin_leftw" />
         </RelativeLayout>
 
-        <TextView
+        <LinearLayout
+            android:id="@+id/second_ignore_ll"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="5dp"
-            android:text="美" />
-        <TextView
-            android:id="@+id/am_pron_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="[a]" />
-        <RelativeLayout
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/button_gradient_radius"
-            android:gravity="center">
+            android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/pron_am_mp3_iv"
-                android:layout_width="8dp"
-                android:layout_height="12dp"
-                android:layout_centerVertical="true"
-                android:background="@drawable/anim_yuyin_leftw" />
-        </RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="5dp"
+                android:text="美" />
+
+            <TextView
+                android:id="@+id/am_pron_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="[a]" />
+
+            <RelativeLayout
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/button_gradient_radius"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/pron_am_mp3_iv"
+                    android:layout_width="8dp"
+                    android:layout_height="12dp"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/anim_yuyin_leftw" />
+            </RelativeLayout>
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout

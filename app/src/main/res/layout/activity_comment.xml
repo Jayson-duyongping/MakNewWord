@@ -24,6 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/window_padding"
+            android:textSize="14sp"
             android:background="@drawable/shape_edit_bg"
             android:gravity="top"
             android:hint="有什么想对我们说的，我们一定改进！"

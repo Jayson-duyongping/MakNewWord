@@ -14,6 +14,7 @@
         android:background="@drawable/shape_edit_bg"
         android:gravity="center"
         android:text="选择词性"
+        android:singleLine="true"
         android:textColor="@color/gray333"
         android:textSize="14sp" />
 
@@ -26,6 +27,7 @@
         android:layout_marginBottom="10dp"
         android:background="@drawable/shape_edit_bg"
         android:hint="词义"
+        android:singleLine="true"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:textSize="14sp" />

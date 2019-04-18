@@ -1,12 +1,12 @@
 package com.mak.newword.show.activity;
 
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 
 import com.mak.newword.R;
 import com.mak.newword.base.BaseFragmentActivity;
+import com.mak.newword.utils.KeybordUtil;
 import com.mak.newword.utils.ToastUtils;
 import com.mak.newword.widget.HeaderView;
 
@@ -56,5 +56,14 @@ public class CommentActivity extends BaseFragmentActivity {
     @Override
     protected void initData() {
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        //如果软键盘打开就让他关闭
+        if (KeybordUtil.isSoftInputShow(CommentActivity.this)) {
+            KeybordUtil.closeKeybord(contentEt, mContext);
+        }
+        super.onBackPressed();
     }
 }

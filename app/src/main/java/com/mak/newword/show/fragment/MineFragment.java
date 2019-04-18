@@ -19,6 +19,7 @@ import com.mak.newword.base.BaseFragment;
 import com.mak.newword.constant.StringConstant;
 import com.mak.newword.greendao.service.UserService;
 import com.mak.newword.mvp.model.UserBean;
+import com.mak.newword.show.activity.AboutActivity;
 import com.mak.newword.show.activity.CommentActivity;
 import com.mak.newword.utils.PopupWindowUtil;
 import com.mak.newword.utils.manager.StorageDayManager;
@@ -73,7 +74,7 @@ public class MineFragment extends BaseFragment {
         updateDayNumber();
     }
 
-    @OnClick({R.id.day_record_card, R.id.day_remember_card, R.id.comment_ll, R.id.setting_ll})
+    @OnClick({R.id.day_record_card, R.id.day_remember_card, R.id.comment_ll, R.id.setting_ll, R.id.about_ll})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.day_record_card:
@@ -83,10 +84,16 @@ public class MineFragment extends BaseFragment {
                 showPlanPop(1);
                 break;
             case R.id.comment_ll:
-                Intent intent = new Intent(getContext(), CommentActivity.class);
-                getContext().startActivity(intent);
+                //意见建议
+                Intent commentIntent = new Intent(getContext(), CommentActivity.class);
+                getContext().startActivity(commentIntent);
                 break;
             case R.id.setting_ll:
+                break;
+            case R.id.about_ll:
+                //关于我们
+                Intent aboutIntent = new Intent(getContext(), AboutActivity.class);
+                getContext().startActivity(aboutIntent);
                 break;
         }
     }

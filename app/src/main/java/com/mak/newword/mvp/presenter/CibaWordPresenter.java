@@ -20,7 +20,6 @@ import com.mak.newword.utils.ToastUtils;
 import com.trello.rxlifecycle2.LifecycleProvider;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 
-import java.lang.reflect.Type;
 
 import io.reactivex.disposables.Disposable;
 
@@ -77,20 +76,25 @@ public class CibaWordPresenter extends BasePresenter<ICibaWordView, Activity> {
             protected void onSuccess(Object response) {
                 Log.d(TAG, "onSuccess response:" + response.toString());
                 try {
-                    if (response.toString().contains("\"exchange\":")) {
-                        //说明是英语实体
-                        CibaWordEnBean bean = new Gson().fromJson(response.toString(), CibaWordEnBean.class);
-                        if (getView() != null) {
-                            getView().closeLoading();
-                            getView().showCibaWordEnResult(bean);
+                    if (response.toString().contains("word_name")) {
+                        if (response.toString().contains("\"exchange\":")) {
+                            //说明是英语实体
+                            CibaWordEnBean bean = new Gson().fromJson(response.toString(), CibaWordEnBean.class);
+                            if (getView() != null) {
+                                getView().closeLoading();
+                                getView().showCibaWordEnResult(bean);
+                            }
+                        } else {
+                            //说明是中文实体
+                            CibaWordZhBean bean = new Gson().fromJson(response.toString(), CibaWordZhBean.class);
+                            if (getView() != null) {
+                                getView().closeLoading();
+                                getView().showCibaWordZhResult(bean);
+                            }
                         }
                     } else {
-                        //说明是中文实体
-                        CibaWordZhBean bean = new Gson().fromJson(response.toString(), CibaWordZhBean.class);
-                        if (getView() != null) {
-                            getView().closeLoading();
-                            getView().showCibaWordZhResult(bean);
-                        }
+                        //word_name都不包含，这个词有问题
+                        ToastUtils.showToast(context, "查询不到这个词");
                     }
                 } catch (JsonSyntaxException e) {
                     e.printStackTrace();
@@ -107,13 +111,5 @@ public class CibaWordPresenter extends BasePresenter<ICibaWordView, Activity> {
 
         HttpRxObservable.getObservable(ApiUtils.getretrofitApi().getQueryWord(word),
                 (LifecycleProvider<ActivityEvent>) context, ActivityEvent.PAUSE).subscribe(httpRxObserver);
-    }
-
-    //根据泛型返回解析制定的类型
-    public <T> T fromToJson(String json, Type listType) {
-        Gson gson = new Gson();
-        T t = null;
-        t = gson.fromJson(json, listType);
-        return t;
     }
 }

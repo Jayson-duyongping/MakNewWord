@@ -51,7 +51,9 @@ public class SentenceDetailActivity extends BaseFragmentActivity {
         sentenceBean = (SentenceBean) getIntent().getSerializableExtra("sentence");
         if (sentenceBean != null) {
             if (!TextUtils.isEmpty(sentenceBean.getImgUrl())) {
-                Glide.with(mContext).load(sentenceBean.getImgUrl()).into(sentenceImgIv);
+                Glide.with(mContext).load(sentenceBean.getImgUrl())
+                        .placeholder(R.mipmap.place_banner)
+                        .into(sentenceImgIv);
             }
             sentenceEnTv.setText(sentenceBean.getEnContent());
             sentenceZhTv.setText(sentenceBean.getZhContent());

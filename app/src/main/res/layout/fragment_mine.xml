@@ -70,11 +70,11 @@
                 android:drawableLeft="@mipmap/icon_plan"
                 android:drawablePadding="10dp"
                 android:gravity="center_vertical"
-                android:textColor="@color/black"
-                android:textSize="16sp"
                 android:paddingLeft="@dimen/window_padding"
                 android:paddingRight="@dimen/window_padding"
-                android:text="制定计划" />
+                android:text="制定计划"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
 
             <HorizontalScrollView
                 android:layout_width="match_parent"
@@ -152,33 +152,6 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/comment_ll"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@color/white"
-            android:gravity="center_vertical"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="49dp"
-                android:drawableLeft="@mipmap/icon_comment"
-                android:drawablePadding="10dp"
-                android:gravity="center_vertical"
-                android:paddingLeft="@dimen/window_padding"
-                android:paddingRight="@dimen/window_padding"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:text="意见反馈" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:alpha="0.2"
-                android:background="@color/common_edit_hint" />
-        </LinearLayout>
-
-        <LinearLayout
             android:id="@+id/setting_ll"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -194,9 +167,63 @@
                 android:gravity="center_vertical"
                 android:paddingLeft="@dimen/window_padding"
                 android:paddingRight="@dimen/window_padding"
+                android:text="设置"
                 android:textColor="@color/black"
-                android:textSize="16sp"
-                android:text="设置" />
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:alpha="0.2"
+                android:background="@color/common_edit_hint" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/comment_ll"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="49dp"
+                android:drawableLeft="@mipmap/icon_comment"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/window_padding"
+                android:paddingRight="@dimen/window_padding"
+                android:text="意见反馈"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:alpha="0.2"
+                android:background="@color/common_edit_hint" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/about_ll"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="49dp"
+                android:drawableLeft="@mipmap/icon_ziliao"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/window_padding"
+                android:paddingRight="@dimen/window_padding"
+                android:text="关于我们"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
 
             <View
                 android:layout_width="match_parent"
