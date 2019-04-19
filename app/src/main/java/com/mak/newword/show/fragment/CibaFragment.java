@@ -2,6 +2,7 @@ package com.mak.newword.show.fragment;
 
 import android.animation.Animator;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -36,6 +37,7 @@ import com.mak.newword.utils.manager.StorageDayManager;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,6 +64,8 @@ public class CibaFragment extends BaseFragment implements ICibaWordView {
     private CibaWordEnBean cibaWordEnBean;
 
     CibaWordPresenter cibaWordPresenter = new CibaWordPresenter(this, getActivity());
+    //音频播放器
+    private MediaPlayer mediaPlayer;
 
     @Override
     protected int getLayout() {
@@ -100,7 +104,42 @@ public class CibaFragment extends BaseFragment implements ICibaWordView {
 
     @Override
     protected void initData() {
+        mediaPlayer = new MediaPlayer();
+    }
 
+    /**
+     * 播放mp3
+     *
+     * @param url
+     */
+    private void playMp3(String url) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (mediaPlayer.isPlaying()) {
+                    mediaPlayer.stop();
+                    mediaPlayer.release();
+                }
+                try {
+                    mediaPlayer.setDataSource(url);
+                    mediaPlayer.prepare();
+                    mediaPlayer.start();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        //回收mediaPlayer
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
     }
 
     @OnClick({R.id.add_record_iv})
@@ -186,6 +225,18 @@ public class CibaFragment extends BaseFragment implements ICibaWordView {
             YoYo.with(Techniques.BounceInLeft).duration(500).repeat(0).playOn(meanView);
             meanContainerLl.addView(meanView);
         }
+        pronEmMp3Iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                playMp3(symbolsBean.getPh_en_mp3());
+            }
+        });
+        pronAmMp3Iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                playMp3(symbolsBean.getPh_am_mp3());
+            }
+        });
         symbolsContainerLl.addView(symView);
     }
 
@@ -222,6 +273,12 @@ public class CibaFragment extends BaseFragment implements ICibaWordView {
             YoYo.with(Techniques.BounceInLeft).duration(500).repeat(0).playOn(meanView);
             meanContainerLl.addView(meanView);
         }
+        pronEmMp3Iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                playMp3(symbolsBean.getSymbol_mp3());
+            }
+        });
         symbolsContainerLl.addView(symView);
     }
 
