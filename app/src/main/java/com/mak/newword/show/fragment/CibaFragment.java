@@ -90,7 +90,7 @@ public class CibaFragment extends BaseFragment implements ICibaWordView {
                     //不能为空关键字
                     String keyword = searchEt.getText().toString().trim();
                     if (TextUtils.isEmpty(keyword)) {
-                        ToastUtils.showToast(getContext(), "请输入需要搜索的单词");
+                        ToastUtils.show( "请输入需要搜索的单词");
                         return false;
                     }
                     //开始搜索
@@ -160,7 +160,7 @@ public class CibaFragment extends BaseFragment implements ICibaWordView {
             List<WordBean> existList = WordService.getInstance(getContext())
                     .queryWordList(cibaWordEnBean.getWord_name());
             if (existList.size() > 0) {
-                ToastUtils.showToast(getContext(), "生词本中已存在此单词");
+                ToastUtils.show("生词本中已存在此单词");
                 return;
             }
             WordBean wordBean = new WordBean();
@@ -186,7 +186,7 @@ public class CibaFragment extends BaseFragment implements ICibaWordView {
             wordBean.setMeans(means);
             //保存数据库
             WordService.getInstance(getContext()).insertWord(wordBean);
-            ToastUtils.showToast(getContext(), "添加到生词本");
+            ToastUtils.show("添加到生词本");
             //刷新界面
             EventBus.getDefault().post(StringConstant.Event_RefreshWordList);
             //记录本地一个

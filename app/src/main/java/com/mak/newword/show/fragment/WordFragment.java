@@ -59,7 +59,7 @@ public class WordFragment extends BaseFragment {
         int recordNum = StorageDayManager.getInstance(getContext())
                 .getRememberNum(StringConstant.Share_Record_Count);
         if (recordNum >= user.getRecordTotalNum()) {
-            ToastUtils.showToast(getContext(), "当前记录已达上限，是否修改计划表");
+            ToastUtils.show("当前记录已达上限，是否修改计划表");
             return;
         }
         Intent intent = new Intent(getActivity(), AddWordActivity.class);

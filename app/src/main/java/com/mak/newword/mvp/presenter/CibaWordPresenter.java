@@ -52,7 +52,7 @@ public class CibaWordPresenter extends BasePresenter<ICibaWordView, Activity> {
             protected void onError(ApiException e) {
                 Log.d(TAG, "onError code:" + e.getStatus());
                 if (e.getStatus() == -1) {
-                    ToastUtils.showToast(context, e.getMsg());
+                    ToastUtils.show(e.getMsg());
                     if (getView() != null) {
                         getView().closeLoading();
                         getView().showToast(null);
@@ -94,11 +94,11 @@ public class CibaWordPresenter extends BasePresenter<ICibaWordView, Activity> {
                         }
                     } else {
                         //word_name都不包含，这个词有问题
-                        ToastUtils.showToast(context, "查询不到这个词");
+                        ToastUtils.show("查询不到这个词");
                     }
                 } catch (JsonSyntaxException e) {
                     e.printStackTrace();
-                    ToastUtils.showToast(context, "解析错误");
+                    ToastUtils.show("解析错误");
                 }
             }
         };

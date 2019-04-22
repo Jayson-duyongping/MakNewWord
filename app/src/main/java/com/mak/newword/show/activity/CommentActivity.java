@@ -40,14 +40,14 @@ public class CommentActivity extends BaseFragmentActivity {
             public void onClick(View view) {
                 //提交
                 if (!isNetworkConnected(mContext)) {
-                    ToastUtils.showToast(mContext, "网络连接失败");
+                    ToastUtils.show( "网络连接失败");
                     return;
                 }
                 if (TextUtils.isEmpty(contentEt.getText().toString())) {
-                    ToastUtils.showToast(mContext, "请输入内容");
+                    ToastUtils.show("请输入内容");
                     return;
                 }
-                ToastUtils.showToast(mContext, "提交成功");
+                ToastUtils.show("提交成功");
                 finish();
             }
         });

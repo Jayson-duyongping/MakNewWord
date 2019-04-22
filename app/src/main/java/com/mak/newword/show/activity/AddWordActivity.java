@@ -125,7 +125,7 @@ public class AddWordActivity extends BaseFragmentActivity {
         String content = contentEt.getText().toString();
         //主内容必须填
         if (TextUtils.isEmpty(content)) {
-            ToastUtils.showToast(mContext, "请填写一个生词");
+            ToastUtils.show( "请填写一个生词");
             return;
         }
         wordBean.setContent(content);
@@ -157,7 +157,7 @@ public class AddWordActivity extends BaseFragmentActivity {
             EventBus.getDefault().post(StringConstant.Event_UpdateDayNumber);
         }
         //保存完成
-        ToastUtils.showToast(mContext, "保存成功");
+        ToastUtils.show( "保存成功");
         //刷新界面
         EventBus.getDefault().post(StringConstant.Event_RefreshWordList);
         this.finish();
@@ -200,7 +200,7 @@ public class AddWordActivity extends BaseFragmentActivity {
     @OnClick(R.id.plus_iv)
     public void onAddNewMean() {
         if (meanContainerLl.getChildCount() == 3) {
-            ToastUtils.showToast(mContext, "别贪心哦，最多只能记3个");
+            ToastUtils.show("别贪心哦，最多只能记3个");
             return;
         }
         if (otherLl.getVisibility() == View.GONE) {

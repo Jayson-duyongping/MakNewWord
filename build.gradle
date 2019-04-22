@@ -1,7 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    
+
     repositories {
         google()
         jcenter()
@@ -23,7 +23,9 @@ allprojects {
         google()
         jcenter()
         //MAK
-        maven { url "http://mvn.leancloud.cn/nexus/content/repositories/public"}
+        maven { url "http://mvn.leancloud.cn/nexus/content/repositories/public" }
+        //一个maven库，后面的 rxpermissions 会用到
+        maven { url 'https://jitpack.io' }
     }
 }
 

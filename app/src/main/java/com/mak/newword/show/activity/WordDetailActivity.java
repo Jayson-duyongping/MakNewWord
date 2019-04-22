@@ -61,7 +61,7 @@ public class WordDetailActivity extends BaseFragmentActivity {
                 //标记为已记
                 wordBean.setIsRemember(true);
                 WordService.getInstance(mContext).updateWord(wordBean);
-                ToastUtils.showToast(mContext, "已标记为已记");
+                ToastUtils.show( "已标记为已记");
                 EventBus.getDefault().post(StringConstant.Event_RefreshWordList);
                 //存一个当日记忆数到本地
                 StorageDayManager.getInstance(mContext)

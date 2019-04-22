@@ -1,7 +1,10 @@
 package com.mak.newword.show.activity;
 
+import android.Manifest;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Handler;
+import android.widget.Toast;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
@@ -12,6 +15,10 @@ import com.mak.newword.R;
 import com.mak.newword.base.BaseFragmentActivity;
 import com.mak.newword.show.mak.DownApkActivity;
 import com.mak.newword.show.mak.MyWebViewActivity;
+import com.mak.newword.utils.ToastUtils;
+import com.tbruyelle.rxpermissions2.RxPermissions;
+
+import io.reactivex.functions.Consumer;
 
 /**
  * 简单启动页面

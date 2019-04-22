@@ -33,21 +33,29 @@ import java.util.Locale;
 public class WordApp extends Application {
     public static WordApp instance;
 
+    public static Context context;
+
     private ApplicationLike tinkerApplicationLike;
 
     /**
      * 获取渠道号
      * 360加固后会擦出渠道信息，需要使用ProtectedApkResignerForWalle再次打包
+     *
      * @return
      */
-    public String getChannel() {
-        return WalleChannelReader.getChannel(getApplicationContext());
+    public static String getChannel() {
+        return WalleChannelReader.getChannel(context);
+    }
+
+    public static Context getAppContext() {
+        return context;
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
         instance = this;
+        context = getApplicationContext();
         /**
          * 我们可以从这里获得Tinker加载过程的信息
          */

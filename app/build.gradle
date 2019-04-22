@@ -15,6 +15,9 @@ android {
         versionName "1.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
+        //忽略依赖重复
+        multiDexEnabled true
+        //tinker依赖需要加这一句
         javaCompileOptions {
             annotationProcessorOptions.includeCompileClasspath true
         }
@@ -107,12 +110,16 @@ dependencies {
     implementation 'com.android.support:support-compat:28.0.0'
     implementation 'com.daimajia.easing:library:2.0@aar'
     implementation 'com.daimajia.androidanimations:library:2.3@aar'
+    //动态权限管理依赖
+    implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
+    implementation 'io.reactivex:rxjava:1.2.9'
+    implementation 'io.reactivex:rxandroid:1.2.0'
+    //下载更新依赖AppUpdate(MAK也需要)
+    implementation 'com.qianwen:update-app:3.5.2'
+    implementation 'com.qianwen:okhttp-utils:3.8.0'
 
     //MAK-cloud控制平台
     implementation 'cn.leancloud.android:avoscloud-sdk:v4.4.4'
-    //MAK-app下载更新
-    implementation 'com.qianwen:update-app:3.5.2'
-    implementation 'com.qianwen:okhttp-utils:3.8.0'
     //MAK-webView
     implementation 'com.just.agentweb:agentweb:2.0.1'
 

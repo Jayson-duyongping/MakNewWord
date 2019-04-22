@@ -1,14 +1,15 @@
 package com.mak.newword;
 
-import android.content.Intent;
+import android.Manifest;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.KeyEvent;
-import android.view.animation.AccelerateInterpolator;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -21,6 +22,9 @@ import com.mak.newword.show.fragment.CibaFragment;
 import com.mak.newword.show.fragment.MineFragment;
 import com.mak.newword.show.fragment.SentenceFragment;
 import com.mak.newword.show.fragment.WordFragment;
+import com.mak.newword.utils.ToastUtils;
+import com.tbruyelle.rxpermissions2.Permission;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -30,6 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import io.reactivex.functions.Consumer;
 
 public class HomeActivity extends BaseFragmentActivity {
 
@@ -80,6 +85,8 @@ public class HomeActivity extends BaseFragmentActivity {
     @Override
     protected void initData() {
         EventBus.getDefault().register(this);
+        //6.0以上动态获取权限(RxPermissions内部已经判断Build.VERSION.SDK_INT >= 23)
+        getPermission();
     }
 
     @Override
@@ -202,5 +209,31 @@ public class HomeActivity extends BaseFragmentActivity {
             finish();
             System.exit(0);
         }
+    }
+
+
+    /**
+     * 动态获取权限
+     */
+    public void getPermission() {
+        RxPermissions rxPermissions = new RxPermissions(this);
+        rxPermissions.requestEach(
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE)
+                .subscribe(new Consumer<Permission>() {
+                    @Override
+                    public void accept(Permission permission) throws Exception {
+                        if (permission.granted) {
+                            // 用户已经同意该权限
+                            //ToastUtils.show("已授权");
+                        } else if (permission.shouldShowRequestPermissionRationale) {
+                            // 用户拒绝了该权限，没有选中『不再询问』（Never ask again）,那么下次再次启动时。还会提示请求权限的对话框
+                            ToastUtils.show("未授权权限，部分功能不能使用");
+                        } else {
+                            // 用户拒绝了该权限，而且选中『不再询问』
+                            ToastUtils.show("未授权权限，请手动开启权限");
+                        }
+                    }
+                });
     }
 }
