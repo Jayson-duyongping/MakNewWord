@@ -12,6 +12,8 @@ import com.jayson.commonlib.widget.smartrefresh.api.RefreshHeader;
 import com.jayson.commonlib.widget.smartrefresh.api.RefreshLayout;
 import com.jayson.commonlib.widget.smartrefresh.footer.ClassicsFooter;
 import com.jayson.commonlib.widget.smartrefresh.header.ClassicsHeader;
+import com.liulishuo.filedownloader.FileDownloader;
+import com.liulishuo.filedownloader.connection.FileDownloadUrlConnection;
 import com.mak.newword.R;
 import com.mak.newword.greendao.service.UserService;
 import com.mak.newword.mvp.model.UserBean;

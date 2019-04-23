@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.liulishuo.filedownloader.FileDownloader;
 import com.mak.newword.base.BaseFragmentActivity;
 import com.mak.newword.constant.StringConstant;
 import com.mak.newword.show.fragment.CibaFragment;
@@ -87,6 +88,8 @@ public class HomeActivity extends BaseFragmentActivity {
         EventBus.getDefault().register(this);
         //6.0以上动态获取权限(RxPermissions内部已经判断Build.VERSION.SDK_INT >= 23)
         getPermission();
+        //不使用定制组件，直接调用则可初始化
+        FileDownloader.setup(mContext);
     }
 
     @Override

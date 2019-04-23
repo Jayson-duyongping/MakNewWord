@@ -13,7 +13,9 @@ import com.mak.newword.R;
 import com.mak.newword.base.BaseFragmentActivity;
 import com.mak.newword.utils.CommonUtil;
 import com.mak.newword.utils.LogUtil;
+import com.mak.newword.utils.NetUtils;
 import com.mak.newword.utils.SDCardUtil;
+import com.mak.newword.utils.ToastUtils;
 import com.mak.newword.utils.downapk.HProgressDialogUtils;
 import com.mak.newword.utils.downapk.UpdateAppHttpUtil;
 import com.mak.newword.widget.HeaderView;
@@ -60,8 +62,15 @@ public class AboutActivity extends BaseFragmentActivity {
 
     @Override
     protected void initData() {
-        //不使用定制组件，直接调用则可初始化
+        //不需要插件化就直接这样初始化
         FileDownloader.setup(mContext);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //暂停所有下载
+        FileDownloader.getImpl().pauseAll();
     }
 
     @OnClick({R.id.check_version_tv, R.id.down_version_tv})
@@ -80,9 +89,19 @@ public class AboutActivity extends BaseFragmentActivity {
      * FileDownloader框架下载文件
      */
     private void downFile() {
+        if(!NetUtils.isWifi(mContext)){
+            ToastUtils.show("文件较大，请在WIFI环境下载");
+            return;
+        }
+        String apkPath = SDCardUtil.getDirector("/NewWord/word_apk") + File.separator + "镇魂曲.apk";
+        File apkFile = new File(apkPath);
+        if (apkFile.exists()) {
+            LogUtil.d(TAG, "apk存在，去安装");
+            return;
+        }
         //文档地址：https://github.com/lingochamp/FileDownloader/blob/master/README-zh.md
         FileDownloader.getImpl().create("https://open.game.163.com/web-download-apk/?gameId=ga8a49e80b6a1fb302016a34bd34a20d7b")
-                .setPath(SDCardUtil.getDirectorAndFile("/SpeedVpn/game_apk", "镇魂曲.apk").getPath())
+                .setPath(apkPath)
                 .setForceReDownload(true)
                 //因为下载的apk可能大于1.99G，所以用FileDownloadLargeFileListener
                 .setListener(new FileDownloadLargeFileListener() {
