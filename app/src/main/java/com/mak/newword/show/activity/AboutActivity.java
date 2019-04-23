@@ -1,9 +1,14 @@
 package com.mak.newword.show.activity;
 
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.liulishuo.filedownloader.BaseDownloadTask;
+import com.liulishuo.filedownloader.FileDownloadLargeFileListener;
+import com.liulishuo.filedownloader.FileDownloadListener;
+import com.liulishuo.filedownloader.FileDownloader;
 import com.mak.newword.R;
 import com.mak.newword.base.BaseFragmentActivity;
 import com.mak.newword.utils.CommonUtil;
@@ -55,11 +60,69 @@ public class AboutActivity extends BaseFragmentActivity {
 
     @Override
     protected void initData() {
-
+        //不使用定制组件，直接调用则可初始化
+        FileDownloader.setup(mContext);
     }
 
-    @OnClick(R.id.check_version_tv)
-    public void onViewClicked() {
+    @OnClick({R.id.check_version_tv, R.id.down_version_tv})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.check_version_tv:
+                downApk();
+                break;
+            case R.id.down_version_tv:
+                downFile();
+                break;
+        }
+    }
+
+    /**
+     * FileDownloader框架下载文件
+     */
+    private void downFile() {
+        //文档地址：https://github.com/lingochamp/FileDownloader/blob/master/README-zh.md
+        FileDownloader.getImpl().create("https://open.game.163.com/web-download-apk/?gameId=ga8a49e80b6a1fb302016a34bd34a20d7b")
+                .setPath(SDCardUtil.getDirectorAndFile("/SpeedVpn/game_apk", "镇魂曲.apk").getPath())
+                .setForceReDownload(true)
+                //因为下载的apk可能大于1.99G，所以用FileDownloadLargeFileListener
+                .setListener(new FileDownloadLargeFileListener() {
+                    @Override
+                    protected void pending(BaseDownloadTask task, long soFarBytes, long totalBytes) {
+                        LogUtil.d(TAG, "等待pending..." + soFarBytes + "," + totalBytes);
+                    }
+
+                    @Override
+                    protected void progress(BaseDownloadTask task, long soFarBytes, long totalBytes) {
+                        int percent = (int) ((soFarBytes / 1000) * 100 / (totalBytes / 1000));
+                        LogUtil.d(TAG, "进度..." + soFarBytes + "-" + totalBytes + "-" + percent + "%");
+                    }
+
+                    @Override
+                    protected void paused(BaseDownloadTask task, long soFarBytes, long totalBytes) {
+                        LogUtil.d(TAG, "暂停..." + soFarBytes + "," + totalBytes);
+                    }
+
+                    @Override
+                    protected void completed(BaseDownloadTask task) {
+                        LogUtil.d(TAG, "完成下载，去安装");
+                    }
+
+                    @Override
+                    protected void error(BaseDownloadTask task, Throwable e) {
+                        LogUtil.d(TAG, "下载出错");
+                    }
+
+                    @Override
+                    protected void warn(BaseDownloadTask task) {
+                        LogUtil.d(TAG, "已存在相同下载");
+                    }
+                }).start();
+    }
+
+    /**
+     * AppUpdate框架下载更新apk
+     */
+    private void downApk() {
         //ToastUtils.showToast(mContext, "已是最新版本");
         UpdateAppBean updateAppBean = new UpdateAppBean();
         //设置apk下载地址

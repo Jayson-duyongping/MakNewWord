@@ -117,6 +117,8 @@ dependencies {
     //下载更新依赖AppUpdate(MAK也需要)
     implementation 'com.qianwen:update-app:3.5.2'
     implementation 'com.qianwen:okhttp-utils:3.8.0'
+    //文件下载管理器，听说性能很好
+    implementation 'com.liulishuo.filedownloader:library:1.7.6'
 
     //MAK-cloud控制平台
     implementation 'cn.leancloud.android:avoscloud-sdk:v4.4.4'

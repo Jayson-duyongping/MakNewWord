@@ -69,6 +69,16 @@
             android:background="@color/common_edit_hint" />
 
         <TextView
+            android:id="@+id/down_version_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFF5EE"
+            android:padding="10dp"
+            android:text="下载新版本"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <TextView
             android:id="@+id/info_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
