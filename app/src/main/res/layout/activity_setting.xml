@@ -1,9 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".show.activity.SettingActivity">
+    android:background="@color/head_back"
+    android:orientation="vertical">
 
-</android.support.constraint.ConstraintLayout>
+    <com.mak.newword.widget.HeaderView
+        android:id="@+id/headerView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/head_height" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:alpha="0.2"
+            android:background="@color/common_edit_hint" />
+        <LinearLayout
+            android:id="@+id/account_ll"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="49dp"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/window_padding"
+                android:paddingRight="@dimen/window_padding"
+                android:text="账号信息"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:alpha="0.2"
+                android:background="@color/common_edit_hint" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/clock_ll"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="49dp"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/window_padding"
+                android:paddingRight="@dimen/window_padding"
+                android:text="闹钟提醒"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:alpha="0.2"
+                android:background="@color/common_edit_hint" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/quit_login_tv"
+            android:layout_width="match_parent"
+            android:layout_height="49dp"
+            android:layout_margin="10dp"
+            android:background="@color/color_red"
+            android:drawablePadding="10dp"
+            android:gravity="center"
+            android:text="退出登录"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+    </LinearLayout>
+</LinearLayout>

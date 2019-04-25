@@ -21,6 +21,7 @@ import com.mak.newword.greendao.service.UserService;
 import com.mak.newword.mvp.model.UserBean;
 import com.mak.newword.show.activity.AboutActivity;
 import com.mak.newword.show.activity.CommentActivity;
+import com.mak.newword.show.activity.SettingActivity;
 import com.mak.newword.utils.PopupWindowUtil;
 import com.mak.newword.utils.manager.StorageDayManager;
 
@@ -89,6 +90,9 @@ public class MineFragment extends BaseFragment {
                 getContext().startActivity(commentIntent);
                 break;
             case R.id.setting_ll:
+                //设置
+                Intent settingIntent = new Intent(getContext(), SettingActivity.class);
+                getContext().startActivity(settingIntent);
                 break;
             case R.id.about_ll:
                 //关于我们

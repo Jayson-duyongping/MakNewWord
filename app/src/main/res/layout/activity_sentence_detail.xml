@@ -23,6 +23,7 @@
         <ImageView
             android:id="@+id/sentence_img_iv"
             android:layout_width="match_parent"
+            android:scaleType="centerCrop"
             android:layout_height="wrap_content" />
 
         <TextView

@@ -90,7 +90,7 @@ public class CibaFragment extends BaseFragment implements ICibaWordView {
                     //不能为空关键字
                     String keyword = searchEt.getText().toString().trim();
                     if (TextUtils.isEmpty(keyword)) {
-                        ToastUtils.show( "请输入需要搜索的单词");
+                        ToastUtils.show("请输入需要搜索的单词");
                         return false;
                     }
                     //开始搜索
@@ -113,22 +113,16 @@ public class CibaFragment extends BaseFragment implements ICibaWordView {
      * @param url
      */
     private void playMp3(String url) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if (mediaPlayer.isPlaying()) {
-                    mediaPlayer.stop();
-                    mediaPlayer.release();
-                }
-                try {
-                    mediaPlayer.setDataSource(url);
-                    mediaPlayer.prepare();
-                    mediaPlayer.start();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
+        if (mediaPlayer.isPlaying()) {
+            mediaPlayer.stop();
+        }
+        try {
+            mediaPlayer.setDataSource(" http://www.ytmp3.cn/down/60548.mp3");
+            mediaPlayer.prepare();
+            mediaPlayer.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

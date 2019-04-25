@@ -15,8 +15,8 @@
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/network_security_config"
         android:supportsRtl="true"
-        tools:replace="android:icon, android:label, android:theme, android:name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:replace="android:icon, android:label, android:theme, android:name">
 
         <!-- 集成了MAK相关之后，在Android9.0会出现NoClassDefFoundError，加入legacy -->
         <uses-library
@@ -30,6 +30,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!--apk更新配置-->
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.mak.newword.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
         <!-- MAK的两个activity -->
         <activity android:name=".show.mak.DownApkActivity" />
         <activity android:name=".show.mak.MyWebViewActivity" />

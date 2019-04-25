@@ -26,8 +26,8 @@
             android:text="[a]" />
 
         <RelativeLayout
-            android:layout_width="18dp"
-            android:layout_height="18dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:background="@drawable/button_gradient_radius"
@@ -35,8 +35,8 @@
 
             <ImageView
                 android:id="@+id/pron_em_mp3_iv"
-                android:layout_width="8dp"
-                android:layout_height="12dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:background="@drawable/anim_yuyin_leftw" />
         </RelativeLayout>
@@ -61,8 +61,8 @@
                 android:text="[a]" />
 
             <RelativeLayout
-                android:layout_width="18dp"
-                android:layout_height="18dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/button_gradient_radius"
@@ -70,8 +70,8 @@
 
                 <ImageView
                     android:id="@+id/pron_am_mp3_iv"
-                    android:layout_width="8dp"
-                    android:layout_height="12dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:background="@drawable/anim_yuyin_leftw" />
             </RelativeLayout>
