@@ -56,7 +56,9 @@ public class InstallUtil {
                         return;
                     }
                     //开启设置安装未知来源应用权限界面
-                    Intent intent2 = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES);
+                    //加packageURI会一步到位
+                    Uri packageURI = Uri.parse("package:" + activity.getPackageName());
+                    Intent intent2 = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, packageURI);
                     activity.startActivityForResult(intent2, RequestCode);
                     return;
                 }

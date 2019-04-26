@@ -26,18 +26,23 @@
             android:text="[a]" />
 
         <RelativeLayout
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/button_gradient_radius"
-            android:gravity="center">
+            android:id="@+id/pron_em_mp3_rl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/button_gradient_radius" />
 
             <ImageView
                 android:id="@+id/pron_em_mp3_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
+                android:layout_centerInParent="true"
                 android:background="@drawable/anim_yuyin_leftw" />
         </RelativeLayout>
 
@@ -61,18 +66,23 @@
                 android:text="[a]" />
 
             <RelativeLayout
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/button_gradient_radius"
-                android:gravity="center">
+                android:id="@+id/pron_am_mp3_rl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/button_gradient_radius" />
 
                 <ImageView
                     android:id="@+id/pron_am_mp3_iv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
+                    android:layout_centerInParent="true"
                     android:background="@drawable/anim_yuyin_leftw" />
             </RelativeLayout>
         </LinearLayout>

@@ -1,7 +1,7 @@
 package com.mak.newword.show.fragment;
 
 import android.animation.Animator;
-import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -12,6 +12,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.daimajia.androidanimations.library.Techniques;
@@ -28,8 +29,6 @@ import com.mak.newword.mvp.model.CibaWordZhBean;
 import com.mak.newword.mvp.model.MeanBean;
 import com.mak.newword.mvp.model.WordBean;
 import com.mak.newword.mvp.presenter.CibaWordPresenter;
-import com.mak.newword.show.activity.AboutActivity;
-import com.mak.newword.show.activity.CommentActivity;
 import com.mak.newword.utils.KeybordUtil;
 import com.mak.newword.utils.StringUtil;
 import com.mak.newword.utils.ToastUtils;
@@ -37,7 +36,6 @@ import com.mak.newword.utils.manager.StorageDayManager;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,6 +64,7 @@ public class CibaFragment extends BaseFragment implements ICibaWordView {
     CibaWordPresenter cibaWordPresenter = new CibaWordPresenter(this, getActivity());
     //音频播放器
     private MediaPlayer mediaPlayer;
+    private AnimationDrawable pronAnim;
 
     @Override
     protected int getLayout() {
@@ -105,23 +104,47 @@ public class CibaFragment extends BaseFragment implements ICibaWordView {
     @Override
     protected void initData() {
         mediaPlayer = new MediaPlayer();
+        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                releaseAnim();
+            }
+        });
     }
 
     /**
      * 播放mp3
      *
      * @param url
+     * @param pronIv
      */
-    private void playMp3(String url) {
-        if (mediaPlayer.isPlaying()) {
-            mediaPlayer.stop();
-        }
+    private void playMp3(String url, ImageView pronIv) {
         try {
-            mediaPlayer.setDataSource(" http://www.ytmp3.cn/down/60548.mp3");
+            if (mediaPlayer.isPlaying()) {
+                mediaPlayer.release();
+                releaseAnim();
+            }
+            //播放声音
+            mediaPlayer.reset();
+            mediaPlayer.setDataSource(url);
             mediaPlayer.prepare();
             mediaPlayer.start();
-        } catch (IOException e) {
+            //播放动画
+            pronAnim = (AnimationDrawable) pronIv.getBackground();
+            pronAnim.start();
+        } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * 释放动画
+     */
+    private void releaseAnim() {
+        if (pronAnim != null) {
+            pronAnim.selectDrawable(0);
+            pronAnim.stop();
+            pronAnim = null;
         }
     }
 
@@ -134,6 +157,8 @@ public class CibaFragment extends BaseFragment implements ICibaWordView {
             mediaPlayer.release();
             mediaPlayer = null;
         }
+        //释放动画
+        releaseAnim();
     }
 
     @OnClick({R.id.add_record_iv})
@@ -202,10 +227,20 @@ public class CibaFragment extends BaseFragment implements ICibaWordView {
         final TextView amPronTv = symView.findViewById(R.id.am_pron_tv);
         final ImageView pronEmMp3Iv = symView.findViewById(R.id.pron_em_mp3_iv);
         final ImageView pronAmMp3Iv = symView.findViewById(R.id.pron_am_mp3_iv);
+        //点击发音的控件
+        final RelativeLayout pronEmMp3Rl = symView.findViewById(R.id.pron_em_mp3_rl);
+        final RelativeLayout pronAmMp3Rl = symView.findViewById(R.id.pron_am_mp3_rl);
         final LinearLayout meanContainerLl = symView.findViewById(R.id.mean_container_ll);
         //音标（英语有英式和美式两种）
         empronTv.setText(TextUtils.isEmpty(symbolsBean.getPh_en()) ? "--" : "[" + symbolsBean.getPh_en() + "]");
         amPronTv.setText(TextUtils.isEmpty(symbolsBean.getPh_am()) ? "--" : "[" + symbolsBean.getPh_am() + "]");
+        //没有语音
+        if (TextUtils.isEmpty(symbolsBean.getPh_en_mp3())) {
+            pronEmMp3Rl.setVisibility(View.GONE);
+        }
+        if (TextUtils.isEmpty(symbolsBean.getPh_am_mp3())) {
+            pronAmMp3Iv.setVisibility(View.GONE);
+        }
         //意思
         meanContainerLl.removeAllViews();
         for (int i = 0; i < symbolsBean.getParts().size(); i++) {
@@ -219,16 +254,16 @@ public class CibaFragment extends BaseFragment implements ICibaWordView {
             YoYo.with(Techniques.BounceInLeft).duration(500).repeat(0).playOn(meanView);
             meanContainerLl.addView(meanView);
         }
-        pronEmMp3Iv.setOnClickListener(new View.OnClickListener() {
+        pronEmMp3Rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                playMp3(symbolsBean.getPh_en_mp3());
+                playMp3(symbolsBean.getPh_en_mp3(), pronEmMp3Iv);
             }
         });
-        pronAmMp3Iv.setOnClickListener(new View.OnClickListener() {
+        pronAmMp3Rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                playMp3(symbolsBean.getPh_am_mp3());
+                playMp3(symbolsBean.getPh_am_mp3(), pronAmMp3Iv);
             }
         });
         symbolsContainerLl.addView(symView);
@@ -244,12 +279,18 @@ public class CibaFragment extends BaseFragment implements ICibaWordView {
         final TextView convertZeTv = symView.findViewById(R.id.convert_ze_tv);
         final TextView empronTv = symView.findViewById(R.id.em_pron_tv);
         final ImageView pronEmMp3Iv = symView.findViewById(R.id.pron_em_mp3_iv);
+        //点击发音的控件
+        final RelativeLayout pronEmMp3Rl = symView.findViewById(R.id.pron_em_mp3_rl);
         final LinearLayout secondIgnoreLl = symView.findViewById(R.id.second_ignore_ll);
         final LinearLayout meanContainerLl = symView.findViewById(R.id.mean_container_ll);
         //音标(中文只有一个)
         convertZeTv.setText("中");
         empronTv.setText(TextUtils.isEmpty(symbolsBean.getWord_symbol()) ? "--" : "[" + symbolsBean.getWord_symbol() + "]");
         secondIgnoreLl.setVisibility(View.GONE);
+        //没有语音
+        if (TextUtils.isEmpty(symbolsBean.getSymbol_mp3())) {
+            pronEmMp3Rl.setVisibility(View.GONE);
+        }
         //意思
         meanContainerLl.removeAllViews();
         for (int i = 0; i < symbolsBean.getParts().size(); i++) {
@@ -267,10 +308,10 @@ public class CibaFragment extends BaseFragment implements ICibaWordView {
             YoYo.with(Techniques.BounceInLeft).duration(500).repeat(0).playOn(meanView);
             meanContainerLl.addView(meanView);
         }
-        pronEmMp3Iv.setOnClickListener(new View.OnClickListener() {
+        pronEmMp3Rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                playMp3(symbolsBean.getSymbol_mp3());
+                playMp3(symbolsBean.getSymbol_mp3(), pronEmMp3Iv);
             }
         });
         symbolsContainerLl.addView(symView);

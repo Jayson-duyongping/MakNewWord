@@ -8,6 +8,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.0'
+        // greendao 插件
         classpath 'org.greenrobot:greendao-gradle-plugin:3.0.0'
         // TinkerPatch 插件
         classpath "com.tinkerpatch.sdk:tinkerpatch-gradle-plugin:1.2.9"
