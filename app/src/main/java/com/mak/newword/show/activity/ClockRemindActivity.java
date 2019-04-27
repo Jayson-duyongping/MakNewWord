@@ -12,6 +12,7 @@ import android.widget.TimePicker;
 import com.mak.newword.R;
 import com.mak.newword.base.BaseFragmentActivity;
 import com.mak.newword.constant.StringConstant;
+import com.mak.newword.receiver.AlarmReceiver;
 import com.mak.newword.utils.SharedPreHelper;
 import com.mak.newword.widget.HeaderView;
 
@@ -77,7 +78,7 @@ public class ClockRemindActivity extends BaseFragmentActivity {
                 .getSharedPreference(StringConstant.Share_Clock_On, false);
         clockSwich.setChecked(clockOn);
         Long time = (Long) SharedPreHelper.getInstance(mContext)
-                .getSharedPreference(StringConstant.Share_Clock_Time, 0);
+                .getSharedPreference(StringConstant.Share_Clock_Time, 0L);
         if (time != 0) {
 
         }
@@ -87,7 +88,7 @@ public class ClockRemindActivity extends BaseFragmentActivity {
      * 初始化Alarm
      */
     private void initAlarm() {
-        piIntent = PendingIntent.getBroadcast(this, 0, getMsgIntent(), 0);
+        piIntent = PendingIntent.getBroadcast(mContext, 0, getMsgIntent(), 0);
         clockTime = System.currentTimeMillis();
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
     }
@@ -99,10 +100,10 @@ public class ClockRemindActivity extends BaseFragmentActivity {
      */
     private Intent getMsgIntent() {
         //AlarmReceiver 为广播在下面代码中
-//        Intent intent = new Intent(this, AlarmReceiver.class);
-//        intent.setAction(AlarmReceiver.BC_ACTION);
-//        intent.putExtra("msg", "闹钟开启");
-        return null;
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        intent.setAction(AlarmReceiver.BC_ACTION);
+        intent.putExtra("msg", "闹钟开启");
+        return intent;
     }
 
     /**
@@ -132,9 +133,7 @@ public class ClockRemindActivity extends BaseFragmentActivity {
     public long getTimeDiff() {
         //这里设置的是当天的HH：mm分，注意精确到秒，时间可以自由设置
         Calendar ca = Calendar.getInstance();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            ca.set(Calendar.HOUR_OF_DAY, timePicker.getCurrentHour());
-        }
+        ca.set(Calendar.HOUR_OF_DAY, timePicker.getCurrentHour());
         ca.set(Calendar.MINUTE, timePicker.getCurrentMinute());
         ca.set(Calendar.SECOND, 0);
         return ca.getTimeInMillis();
