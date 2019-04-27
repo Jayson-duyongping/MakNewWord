@@ -1,20 +1,32 @@
 package com.mak.newword.show.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.support.v7.widget.SimpleItemAnimator;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.mak.newword.R;
 import com.mak.newword.base.BaseRecyclerAdapter;
+import com.mak.newword.greendao.service.UserService;
 import com.mak.newword.greendao.service.WordService;
 import com.mak.newword.mvp.model.MeanBean;
 import com.mak.newword.mvp.model.WordBean;
 import com.mak.newword.show.activity.AddWordActivity;
 import com.mak.newword.show.activity.WordDetailActivity;
+import com.mak.newword.utils.PopupWindowUtil;
 import com.mak.newword.utils.ToastUtils;
 import com.mak.newword.widget.SmartViewHolder;
 import com.mak.newword.widget.SwipeMenuLayout;
@@ -31,6 +43,9 @@ import java.util.List;
 public class WordItemAdapter extends BaseRecyclerAdapter<WordBean> {
 
     private Context context;
+    //长按弹出的pop
+    private PopupWindow planPop;
+    private View planPopView;
 
     public WordItemAdapter(Context context) {
         super(R.layout.item_word);
@@ -43,15 +58,10 @@ public class WordItemAdapter extends BaseRecyclerAdapter<WordBean> {
     }
 
     private void onHandle(SmartViewHolder holder, final WordBean model, final int position) {
-        final SwipeMenuLayout swipeMenuLayout = holder.getView(R.id.swipemenu_view);
-        swipeMenuLayout.setSwipeEnable(true);
-        swipeMenuLayout.setIos(false);
         ImageView finishIv = holder.getView(R.id.finish_iv);
         LinearLayout contentLl = holder.getView(R.id.content_ll);
         TextView wordNameTv = holder.getView(R.id.word_name_tv);
         TextView wordMeanTv = holder.getView(R.id.word_mean_tv);
-        TextView editTv = holder.getView(R.id.edit_tv);
-        TextView deleteTv = holder.getView(R.id.delete_tv);
         //-----
         wordNameTv.setText(model.getContent());
         List<MeanBean> means = model.getMeans();
@@ -78,24 +88,83 @@ public class WordItemAdapter extends BaseRecyclerAdapter<WordBean> {
                 context.startActivity(intent);
             }
         });
-        //编辑内容
-        editTv.setOnClickListener(new View.OnClickListener() {
+        //长按操作
+        contentLl.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                showPlanPop(model, position);
+                return true;
+            }
+        });
+    }
+
+    /**
+     * 弹出计划框
+     */
+    public void showPlanPop(WordBean model, int position) {
+        planPopView = LayoutInflater.from(context)
+                .inflate(R.layout.pop_word, null);
+        final TextView rememberBtn = planPopView.findViewById(R.id.remember_word_btn);
+        final TextView editBtn = planPopView.findViewById(R.id.edit_word_btn);
+        final TextView deleteBtn = planPopView.findViewById(R.id.delete_word_btn);
+        //标记为已记
+        rememberBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                swipeMenuLayout.smoothClose();
+                planPop.dismiss();
+            }
+        });
+        //编辑
+        editBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                planPop.dismiss();
                 Intent intent = new Intent(context, AddWordActivity.class);
                 intent.putExtra("word", model);
                 context.startActivity(intent);
             }
         });
-        //删除内容
-        deleteTv.setOnClickListener(new View.OnClickListener() {
+        //删除
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                planPop.dismiss();
                 WordService.getInstance(context).deleteWord(model);
-                swipeMenuLayout.smoothClose();
                 removePosition(position);
             }
         });
+        if (planPop == null) {
+            planPop = PopupWindowUtil.getPopWindowForCenter(getActivity(), planPopView);
+            //动画一下
+            YoYo.with(Techniques.BounceIn)
+                    .duration(500)
+                    .repeat(0)
+                    .playOn(planPopView);
+            planPop.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                @Override
+                public void onDismiss() {
+                    WindowManager.LayoutParams ll =
+                            getActivity().getWindow().getAttributes();
+                    ll.alpha = 1f;
+                    getActivity().getWindow().setAttributes(ll);
+                    planPop = null;
+                }
+            });
+        }
+    }
+
+    /**
+     * 获取Activity
+     *
+     * @return
+     */
+    private Activity getActivity() {
+        while (!(context instanceof Activity) && context instanceof ContextWrapper) {
+            context = ((ContextWrapper) context).getBaseContext();
+        }
+        if (context instanceof Activity) {
+            return (Activity) context;
+        }
+        return null;
     }
 }

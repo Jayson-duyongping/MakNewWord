@@ -35,7 +35,7 @@ public class WordFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        //pading状态栏高度
+        //padding状态栏高度
         HomeActivity activity = (HomeActivity) getContext();
         wordParent.setPadding(0, activity.statusBarHeight, 0, 0);
     }
@@ -59,7 +59,7 @@ public class WordFragment extends BaseFragment {
         int recordNum = StorageDayManager.getInstance(getContext())
                 .getRememberNum(StringConstant.Share_Record_Count);
         if (recordNum >= user.getRecordTotalNum()) {
-            ToastUtils.show("当前记录已达上限，是否修改计划表");
+            ToastUtils.show("当前记录已达上限，去修改计划表吧");
             return;
         }
         Intent intent = new Intent(getActivity(), AddWordActivity.class);

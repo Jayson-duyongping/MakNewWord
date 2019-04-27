@@ -109,7 +109,7 @@ public class HomeActivity extends BaseFragmentActivity {
         @Override
         public void onPageSelected(int position) {
             RadioButton radioButton = (RadioButton) mTabRadioGroup.getChildAt(position);
-            YoYo.with(Techniques.Bounce).duration(300).repeat(0).playOn(radioButton);
+            YoYo.with(Techniques.Pulse).duration(300).repeat(0).playOn(radioButton);
             radioButton.setChecked(true);
         }
 

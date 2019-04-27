@@ -1,6 +1,7 @@
 package com.mak.newword.show.activity;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -33,7 +34,7 @@ public class SettingActivity extends BaseFragmentActivity {
     @Override
     protected void initView() {
         mStatusBar(R.color.head_back);
-        headerView.setCenterText("关于我们");
+        headerView.setCenterText("设置");
         headerView.setBackLnOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -47,12 +48,20 @@ public class SettingActivity extends BaseFragmentActivity {
 
     }
 
-    @OnClick({R.id.account_ll, R.id.clock_ll, R.id.quit_login_tv})
+    @OnClick({R.id.account_ll, R.id.clock_ll, R.id.message_ll, R.id.quit_login_tv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.account_ll:
                 break;
             case R.id.clock_ll:
+                //跳转闹钟提醒页面
+                Intent remindIntent = new Intent(mContext, ClockRemindActivity.class);
+                startActivity(remindIntent);
+                break;
+            case R.id.message_ll:
+                //跳转消息管理页面
+                Intent messageIntent = new Intent(mContext, MessageManagerActivity.class);
+                startActivity(messageIntent);
                 break;
             case R.id.quit_login_tv:
                 //到这里开始正式下载，弹框提示

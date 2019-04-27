@@ -32,46 +32,69 @@
             android:textSize="14sp" />
     </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/ciba_content_ll"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
-        android:orientation="vertical"
-        android:padding="@dimen/window_padding">
+        android:background="@color/white">
 
         <LinearLayout
+            android:id="@+id/ciba_content_ll"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="@dimen/window_padding">
 
-            <TextView
-                android:id="@+id/word_name_tv"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:textColor="@color/black"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+                android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/add_record_iv"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/word_name_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/add_record_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginBottom="2dp"
+                    android:src="@mipmap/icon_add_record"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/symbols_container_ll"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="20dp"
-                android:layout_marginBottom="2dp"
-                android:src="@mipmap/icon_add_record"
-                android:visibility="gone" />
-
+                android:orientation="vertical"></LinearLayout>
         </LinearLayout>
 
-
         <LinearLayout
-            android:id="@+id/symbols_container_ll"
+            android:id="@+id/search_kong_ll"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"></LinearLayout>
-    </LinearLayout>
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_search_empty" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="在这里可以搜索你想知道的单词哦！" />
+        </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>

@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="110dp"
+    android:layout_height="wrap_content"
     android:background="@color/white"
-    android:orientation="vertical"
     android:paddingLeft="@dimen/window_padding"
-    android:paddingRight="@dimen/window_padding">
+    android:paddingRight="@dimen/window_padding"
+    android:orientation="vertical">
+
+    <com.youth.banner.Banner
+        android:id="@+id/sentence_banner"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="@dimen/window_padding"
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/content_ll"

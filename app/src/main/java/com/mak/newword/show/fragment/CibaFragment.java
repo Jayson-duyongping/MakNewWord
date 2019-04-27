@@ -19,6 +19,7 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.mak.newword.HomeActivity;
 import com.mak.newword.R;
+import com.mak.newword.application.WordApp;
 import com.mak.newword.base.BaseFragment;
 import com.mak.newword.constant.StringConstant;
 import com.mak.newword.greendao.service.WordService;
@@ -27,6 +28,7 @@ import com.mak.newword.mvp.model.BaseErrorBean;
 import com.mak.newword.mvp.model.CibaWordEnBean;
 import com.mak.newword.mvp.model.CibaWordZhBean;
 import com.mak.newword.mvp.model.MeanBean;
+import com.mak.newword.mvp.model.UserBean;
 import com.mak.newword.mvp.model.WordBean;
 import com.mak.newword.mvp.presenter.CibaWordPresenter;
 import com.mak.newword.utils.KeybordUtil;
@@ -50,6 +52,9 @@ public class CibaFragment extends BaseFragment implements ICibaWordView {
     LinearLayout cibaParent;
     @BindView(R.id.search_et)
     EditText searchEt;
+
+    @BindView(R.id.search_kong_ll)
+    LinearLayout searchKongLl;
 
     @BindView(R.id.symbols_container_ll)
     LinearLayout symbolsContainerLl;
@@ -76,7 +81,7 @@ public class CibaFragment extends BaseFragment implements ICibaWordView {
         //防止软键盘自动弹出，点击的时候才弹出，很管用
         getActivity().getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        //pading状态栏高度
+        //padding状态栏高度
         HomeActivity activity = (HomeActivity) getContext();
         cibaParent.setPadding(0, activity.statusBarHeight, 0, 0);
         //设置键盘按钮（搜索）监听
@@ -165,6 +170,14 @@ public class CibaFragment extends BaseFragment implements ICibaWordView {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.add_record_iv:
+                //查询每日记录上限
+                UserBean user = WordApp.instance.getUser();
+                int recordNum = StorageDayManager.getInstance(getContext())
+                        .getRememberNum(StringConstant.Share_Record_Count);
+                if (recordNum >= user.getRecordTotalNum()) {
+                    ToastUtils.show("当前记录已达上限，去修改计划表吧");
+                    return;
+                }
                 //添加到生词本
                 addNewRecord();
                 break;
@@ -300,6 +313,9 @@ public class CibaFragment extends BaseFragment implements ICibaWordView {
             CibaWordZhBean.SymbolsBean.PartsBean mean = symbolsBean.getParts().get(i);
             classTv.setText(mean.getPart_name());
             StringBuilder sb = new StringBuilder();
+            if (mean.getMeans() == null) {
+                continue;
+            }
             for (int j = 0; j < mean.getMeans().size(); j++) {
                 sb.append(mean.getMeans().get(j).getWord_mean() + "; ");
             }
@@ -328,6 +344,7 @@ public class CibaFragment extends BaseFragment implements ICibaWordView {
             if (TextUtils.isEmpty(bean.getWord_name())) {
                 return;
             }
+            searchKongLl.setVisibility(View.GONE);
             cibaWordEnBean = bean;
             //名字
             wordNameTv.setText(bean.getWord_name());
@@ -364,6 +381,7 @@ public class CibaFragment extends BaseFragment implements ICibaWordView {
             if (TextUtils.isEmpty(bean.getWord_name())) {
                 return;
             }
+            searchKongLl.setVisibility(View.GONE);
             cibaWordEnBean = null;
             //名字
             wordNameTv.setText(bean.getWord_name());

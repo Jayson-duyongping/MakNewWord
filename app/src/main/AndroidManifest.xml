@@ -30,7 +30,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--apk更新配置-->
+        <!-- apk更新配置 -->
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.mak.newword.fileprovider"
@@ -50,7 +50,9 @@
         <activity android:name=".show.activity.WordDetailActivity" />
         <activity android:name=".show.activity.SentenceDetailActivity" />
         <activity android:name=".show.activity.SettingActivity" />
-        <activity android:name=".show.activity.AboutActivity"></activity>
+        <activity android:name=".show.activity.AboutActivity" />
+        <activity android:name=".show.activity.MessageManagerActivity" />
+        <activity android:name=".show.activity.ClockRemindActivity"></activity>
     </application>
 
 </manifest>

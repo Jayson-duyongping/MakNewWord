@@ -27,10 +27,11 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:text="新增"
-            android:visibility="gone"
             android:textColor="@color/head_text"
-            android:textSize="@dimen/head_text_size" />
+            android:textSize="@dimen/head_text_size"
+            android:visibility="gone" />
     </RelativeLayout>
+
     <FrameLayout
         android:id="@+id/contentLayout1"
         android:layout_width="match_parent"

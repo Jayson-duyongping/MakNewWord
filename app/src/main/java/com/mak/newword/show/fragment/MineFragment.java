@@ -61,7 +61,7 @@ public class MineFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        //pading状态栏高度
+        //padding状态栏高度
         HomeActivity activity = (HomeActivity) getContext();
         mineParent.setPadding(0, activity.statusBarHeight, 0, 0);
     }

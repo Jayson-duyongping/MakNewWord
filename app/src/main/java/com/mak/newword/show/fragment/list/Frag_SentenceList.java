@@ -4,11 +4,8 @@ import com.mak.newword.R;
 import com.mak.newword.base.BaseListFragment;
 import com.mak.newword.base.BaseRecyclerAdapter;
 import com.mak.newword.greendao.service.SentenceService;
-import com.mak.newword.greendao.service.WordService;
 import com.mak.newword.mvp.model.SentenceBean;
-import com.mak.newword.mvp.model.WordBean;
 import com.mak.newword.show.adapter.SentenceItemAdapter;
-import com.mak.newword.show.adapter.WordItemAdapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -68,6 +65,8 @@ public class Frag_SentenceList extends BaseListFragment {
             //刷新，每次查询20个
             List<SentenceBean> sentenceList = SentenceService.getInstance(mContext)
                     .querySentenceList((currentPage - 1) * 20, 20);
+            //因为第一个是一个推荐轮播图，我们这里需要占个位
+            sentenceList.add(0, null);
             sentenceItemAdapter.refresh(sentenceList);
         } else {
             //加载，每次查询20个

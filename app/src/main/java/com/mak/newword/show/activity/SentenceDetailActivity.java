@@ -1,8 +1,8 @@
 package com.mak.newword.show.activity;
 
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
