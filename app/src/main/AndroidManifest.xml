@@ -7,9 +7,10 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
+    <!--系统弹框-->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <!--震动权限-->
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:name=".application.WordApp"
@@ -56,7 +57,10 @@
         <activity android:name=".show.activity.AboutActivity" />
         <activity android:name=".show.activity.MessageManagerActivity" />
         <activity android:name=".show.activity.ClockRemindActivity"></activity>
-        <receiver android:name=".receiver.AlarmReceiver"/>
+        <!--闹钟全局广播(不过app杀死，还是会被杀死，目前没有解决办法)-->
+        <receiver
+            android:name=".receiver.AlarmReceiver"
+            android:process=":wordclock" />
     </application>
 
 </manifest>

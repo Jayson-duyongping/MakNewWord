@@ -3,17 +3,21 @@ package com.mak.newword.show.activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.mak.newword.R;
 import com.mak.newword.base.BaseFragmentActivity;
 import com.mak.newword.constant.StringConstant;
 import com.mak.newword.receiver.AlarmReceiver;
 import com.mak.newword.utils.SharedPreHelper;
+import com.mak.newword.utils.ToastUtils;
 import com.mak.newword.widget.HeaderView;
 
 import java.util.Calendar;
@@ -115,6 +119,15 @@ public class ClockRemindActivity extends BaseFragmentActivity {
             alarmManager.set(AlarmManager.RTC_WAKEUP, getTimeDiff(), piIntent);
         } else {
             alarmManager.setExact(AlarmManager.RTC_WAKEUP, getTimeDiff(), piIntent);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!Settings.canDrawOverlays(mContext)) {
+                //若没有权限，提示获取.
+                Uri packageURI = Uri.parse("package:" + mContext.getPackageName());
+                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, packageURI);
+                ToastUtils.show("需要取得权限以使用悬浮窗");
+                startActivity(intent);
+            }
         }
     }
 
