@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/head_back"
     android:orientation="vertical"
-    tools:context="com.mak.newword.show.fragment.MineFragment">
+    tools:context="com.mak.eword.show.fragment.MineFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -35,7 +35,7 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <com.mak.newword.widget.RoundImageView
+            <com.mak.eword.widget.RoundImageView
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:src="@mipmap/test_head" />

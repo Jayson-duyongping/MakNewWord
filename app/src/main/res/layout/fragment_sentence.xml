@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/head_back"
     android:orientation="vertical"
-    tools:context="com.mak.newword.show.fragment.SentenceFragment">
+    tools:context="com.mak.eword.show.fragment.SentenceFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"

@@ -5,7 +5,7 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <com.mak.newword.widget.SwipeMenuLayout
+    <com.mak.eword.widget.SwipeMenuLayout
         android:id="@+id/swipemenu_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -76,7 +76,7 @@
                 android:textColor="#ffffff"
                 android:textSize="16sp" />
         </LinearLayout>
-    </com.mak.newword.widget.SwipeMenuLayout>
+    </com.mak.eword.widget.SwipeMenuLayout>
 
     <View
         android:layout_width="match_parent"

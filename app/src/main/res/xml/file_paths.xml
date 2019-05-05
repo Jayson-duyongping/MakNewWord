@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <paths>
     <!--<cache-path name="com.mak.newword" path="download"/>-->
-    <external-path name="com.mak.newword" path="/NewWord/word_apk"/>
+    <external-path name="com.mak.eword" path="/NewWord/word_apk"/>
 </paths>

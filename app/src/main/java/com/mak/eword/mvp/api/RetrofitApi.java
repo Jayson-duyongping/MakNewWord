@@ -1,0 +1,43 @@
+package com.mak.eword.mvp.api;
+
+
+import io.reactivex.Observable;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.http.Body;
+import retrofit2.http.GET;
+import retrofit2.http.POST;
+import retrofit2.http.Query;
+import retrofit2.http.Url;
+
+/**
+ * Created by jayson on 2019/4/16.
+ */
+
+public interface RetrofitApi {
+
+    /**
+     * 用户注册
+     */
+    @POST(UrlConst.USER_REGISTER)
+    Observable<ResponseBody> userRegister(@Body RequestBody route);
+    /**
+     * 用户登录
+     */
+    @POST(UrlConst.USER_LOGIN)
+    Observable<ResponseBody> userLogin(@Body RequestBody route);
+
+    /**
+     * 单词查询
+     */
+    @GET(UrlConst.GET_QUERY_WORD)
+    Observable<ResponseBody> getQueryWord(@Query("w") String word);
+
+    /**
+     * 信息查询
+     */
+    @GET
+    Observable<ResponseBody> messageInfo(@Url String url);
+
+
+}

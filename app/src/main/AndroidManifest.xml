@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.mak.newword">
+    package="com.mak.eword">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <!--系统弹框-->
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <!--震动权限-->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 系统弹框 -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /> <!-- 震动权限 -->
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
@@ -21,8 +19,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon, android:label, android:theme, android:name">
-
-        <!-- 集成了MAK相关之后，在Android9.0会出现NoClassDefFoundError，加入legacy -->
+        <activity android:name=".show.activity.RegisterActivity"></activity>
+        <activity android:name=".show.activity.LoginActivity" /> <!-- 集成了MAK相关之后，在Android9.0会出现NoClassDefFoundError，加入legacy -->
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
@@ -33,21 +31,18 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <!-- apk更新配置 -->
+        </activity> <!-- apk更新配置 -->
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.mak.newword.fileprovider"
+            android:authorities=".fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
-        </provider>
-        <!-- MAK的两个activity -->
+        </provider> <!-- MAK的两个activity -->
         <activity android:name=".show.mak.DownApkActivity" />
-        <activity android:name=".show.mak.MyWebViewActivity" />
-        <!-- 程序的activity -->
+        <activity android:name=".show.mak.MyWebViewActivity" /> <!-- 程序的activity -->
         <activity android:name=".HomeActivity" />
         <activity android:name=".show.activity.CommentActivity" />
         <activity android:name=".show.activity.AddWordActivity" />
@@ -56,8 +51,7 @@
         <activity android:name=".show.activity.SettingActivity" />
         <activity android:name=".show.activity.AboutActivity" />
         <activity android:name=".show.activity.MessageManagerActivity" />
-        <activity android:name=".show.activity.ClockRemindActivity"></activity>
-        <!--闹钟全局广播(不过app杀死，还是会被杀死，目前没有解决办法)-->
+        <activity android:name=".show.activity.ClockRemindActivity" /> <!-- 闹钟全局广播(不过app杀死，还是会被杀死，目前没有解决办法) -->
         <receiver
             android:name=".receiver.AlarmReceiver"
             android:process=":wordclock" />

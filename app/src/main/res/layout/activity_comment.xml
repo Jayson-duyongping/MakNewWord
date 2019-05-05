@@ -8,7 +8,7 @@
     android:orientation="vertical"
     tools:context=".show.activity.CommentActivity">
 
-    <com.mak.newword.widget.HeaderView
+    <com.mak.eword.widget.HeaderView
         android:id="@+id/headerView"
         android:layout_width="match_parent"
         android:layout_height="@dimen/head_height" />
