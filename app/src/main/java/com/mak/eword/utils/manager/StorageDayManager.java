@@ -41,7 +41,7 @@ public class StorageDayManager {
      */
     public void handlerDayNumber(String shareId) {
         String shareCountStr = (String) sharedPreHelper
-                .getSharedPreference(shareId, "");
+                .get(shareId, "");
         long currentTime = System.currentTimeMillis();
         String currentDay = DateUtils.convertToString(DateUtils.FORMAT_YYYYMMDD, currentTime);
         String newShare = "";
@@ -72,7 +72,7 @@ public class StorageDayManager {
     public int getRememberNum(String shareId) {
         int num = 0;
         String shareCountStr = (String) sharedPreHelper
-                .getSharedPreference(shareId, "");
+                .get(shareId, "");
         long currentTime = System.currentTimeMillis();
         String currentDay = DateUtils.convertToString(DateUtils.FORMAT_YYYYMMDD, currentTime);
         if (!TextUtils.isEmpty(shareCountStr)

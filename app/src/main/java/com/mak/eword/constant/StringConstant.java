@@ -9,6 +9,7 @@ public class StringConstant {
     public static final String Share_FileName = "word_share";
 
     public static final String Share_User = "Share_User";
+    public static final String Share_Token = "Share_Token";
     public static final String Share_Record_Count = "Share_Record_Count";
     public static final String Share_Remember_Count = "Share_Remember_Count";
     //闹铃开关

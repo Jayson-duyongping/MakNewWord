@@ -78,10 +78,10 @@ public class ClockRemindActivity extends BaseFragmentActivity {
         initAlarm();
         //闹铃状态
         Boolean clockOn = (Boolean) SharedPreHelper.getInstance(mContext)
-                .getSharedPreference(StringConstant.Share_Clock_On, false);
+                .get(StringConstant.Share_Clock_On, false);
         clockSwich.setChecked(clockOn);
         Long time = (Long) SharedPreHelper.getInstance(mContext)
-                .getSharedPreference(StringConstant.Share_Clock_Time, 0L);
+                .get(StringConstant.Share_Clock_Time, 0L);
         if (time != 0) {
 
         }

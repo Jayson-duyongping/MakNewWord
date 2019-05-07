@@ -85,6 +85,8 @@ public class LoginActivity extends BaseFragmentActivity implements IUserLoginVie
         if (bean != null && !TextUtils.isEmpty(bean.getUsername())) {
             //保存用户
             SharedPreHelper.getInstance(mContext).saveBeanByFastJson(StringConstant.Share_User, bean);
+            //保存token
+            SharedPreHelper.getInstance(mContext).put(StringConstant.Share_Token, bean.getToken());
             //登录成功
             Intent intent = new Intent(mContext, HomeActivity.class);
             startActivity(intent);

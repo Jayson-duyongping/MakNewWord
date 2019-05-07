@@ -21,11 +21,20 @@ public class UserBean implements Serializable {
     private String phone;
     private String qq;
     private String wx;
+    private String token;
     //本地字段
     private int recordDayNum;
     private int rememberDayNum;
     private int recordTotalNum;
     private int rememberTotalNum;
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     public Integer getId() {
         return id;

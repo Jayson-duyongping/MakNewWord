@@ -66,7 +66,7 @@ public class SharedPreHelper<T> {
     /**
      * 获取保存的数据
      */
-    public Object getSharedPreference(String key, Object defaultObject) {
+    public Object get(String key, Object defaultObject) {
         if (defaultObject instanceof String) {
             return sharedPreferences.getString(key, (String) defaultObject);
         } else if (defaultObject instanceof Integer) {
@@ -117,7 +117,7 @@ public class SharedPreHelper<T> {
      */
     public <T> T getBeanByFastJson(String key,
                                    Class<T> clazz) {
-        String objString = (String) getSharedPreference(key, "");
+        String objString = (String) get(key, "");
         if (TextUtils.isEmpty(objString)) {
             return null;
         }

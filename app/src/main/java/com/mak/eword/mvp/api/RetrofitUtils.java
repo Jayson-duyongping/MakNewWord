@@ -1,10 +1,12 @@
 package com.mak.eword.mvp.api;
 
 
-
 import com.jayson.commonlib.mvp.http.retrofit.ProgressListener;
 import com.jayson.commonlib.mvp.http.retrofit.ProgressResponseBody;
 import com.jayson.commonlib.mvp.utils.LogUtils;
+import com.mak.eword.application.WordApp;
+import com.mak.eword.constant.StringConstant;
+import com.mak.eword.utils.SharedPreHelper;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -27,7 +29,8 @@ public class RetrofitUtils {
     /**
      * 接口地址
      */
-    public static final String BASE_API = "http://eword.ngrok.xiaomiqiu.cn/";
+    //public static final String BASE_API = "http://eword.ngrok.xiaomiqiu.cn/";
+    public static final String BASE_API = "http://192.168.23.1:9090/";
 
     public static final int CONNECT_TIME_OUT = 30;//连接超时时长x秒
     public static final int READ_TIME_OUT = 30;//读数据超时时长x秒
@@ -71,8 +74,9 @@ public class RetrofitUtils {
                         Request request = chain.request()
                                 .newBuilder()
                                 .addHeader("Content-Type", "text/json")
+                                .addHeader("Authorization", "Bearer "
+                                        + SharedPreHelper.getInstance(WordApp.getAppContext()).get(StringConstant.Share_Token, ""))
                                 .build();
-                        //.addHeader("Authorization", "Bearer " + PreferencesUtil.getString(LoginInfo.ACCESS_TOKEN, ""))
                         return chain.proceed(request);
                     }
                 })
