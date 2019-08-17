@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -14,17 +15,25 @@ import android.widget.TextView;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.google.gson.Gson;
 import com.mak.eword.R;
 import com.mak.eword.base.BaseRecyclerAdapter;
-import com.mak.eword.greendao.service.WordService;
+import com.mak.eword.mvp.inface.IWordEditView;
+import com.mak.eword.mvp.model.BaseErrorBean;
 import com.mak.eword.mvp.model.MeanBean;
 import com.mak.eword.mvp.model.WordBean;
+import com.mak.eword.mvp.model.common.CommonBean;
+import com.mak.eword.mvp.presenter.WordDeletePresenter;
 import com.mak.eword.show.activity.AddWordActivity;
 import com.mak.eword.show.activity.WordDetailActivity;
 import com.mak.eword.utils.PopupWindowUtil;
+import com.mak.eword.utils.ToastUtils;
 import com.mak.eword.widget.SmartViewHolder;
 
 import java.util.List;
+
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 
 /**
  * 创建人：jayson
@@ -32,16 +41,21 @@ import java.util.List;
  * 创建内容：
  */
 
-public class WordItemAdapter extends BaseRecyclerAdapter<WordBean> {
+public class WordItemAdapter extends BaseRecyclerAdapter<WordBean> implements IWordEditView {
 
     private Context context;
     //长按弹出的pop
     private PopupWindow planPop;
     private View planPopView;
+    //记录当前点击删除的position
+    private int deletePosition;
+
+    private WordDeletePresenter wordDeletePresenter;
 
     public WordItemAdapter(Context context) {
         super(R.layout.item_word);
         this.context = context;
+        wordDeletePresenter = new WordDeletePresenter(this, getActivity());
     }
 
     @Override
@@ -66,7 +80,7 @@ public class WordItemAdapter extends BaseRecyclerAdapter<WordBean> {
             }
             wordMeanTv.setText(sb.toString());
         }
-        if (model.getIsRemember()) {
+        if (model.getIsRemember() == 1) {
             finishIv.setVisibility(View.VISIBLE);
         } else {
             finishIv.setVisibility(View.GONE);
@@ -121,8 +135,8 @@ public class WordItemAdapter extends BaseRecyclerAdapter<WordBean> {
             @Override
             public void onClick(View view) {
                 planPop.dismiss();
-                WordService.getInstance(context).deleteWord(model);
-                removePosition(position);
+                deletePosition = position;
+                wordDeletePresenter.deleteWord(context, setRequestBody(model));
             }
         });
         if (planPop == null) {
@@ -158,5 +172,37 @@ public class WordItemAdapter extends BaseRecyclerAdapter<WordBean> {
             return (Activity) context;
         }
         return null;
+    }
+
+    protected RequestBody setRequestBody(WordBean entity) {
+        Gson gson = new Gson();
+        String route = gson.toJson(entity);
+        Log.d("TAG", "参数：" + route);
+        //调用接口
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), route);
+        return body;
+    }
+
+    @Override
+    public void showWordEditResult(CommonBean bean) {
+        if (bean != null) {
+            ToastUtils.show(bean.getMsg());
+            removePosition(deletePosition);
+        }
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void closeLoading() {
+
+    }
+
+    @Override
+    public void showToast(BaseErrorBean bean) {
+
     }
 }

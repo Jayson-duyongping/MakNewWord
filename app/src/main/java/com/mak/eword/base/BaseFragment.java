@@ -10,10 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.gson.Gson;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 
 public abstract class BaseFragment<T> extends RxFragment {
     public String TAG = "";
@@ -95,5 +98,14 @@ public abstract class BaseFragment<T> extends RxFragment {
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
         @SuppressLint("MissingPermission") NetworkInfo ni = cm.getActiveNetworkInfo();
         return ni != null && ni.isConnectedOrConnecting();
+    }
+
+    protected RequestBody setRequestBody(T entity) {
+        Gson gson = new Gson();
+        String route = gson.toJson(entity);
+        Log.d("TAG", "参数：" + route);
+        //调用接口
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), route);
+        return body;
     }
 }

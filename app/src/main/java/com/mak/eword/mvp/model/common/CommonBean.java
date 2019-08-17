@@ -9,6 +9,7 @@ public class CommonBean {
     private String code;                            //响应状态码
     private String msg;                             //响应状态描述
     private Object data;
+    private Object list;
 
     public Object getData() {
         return data;
@@ -32,5 +33,13 @@ public class CommonBean {
 
     public void setMsg(String msg) {
         this.msg = msg;
+    }
+
+    public Object getList() {
+        return list;
+    }
+
+    public void setList(Object list) {
+        this.list = list;
     }
 }

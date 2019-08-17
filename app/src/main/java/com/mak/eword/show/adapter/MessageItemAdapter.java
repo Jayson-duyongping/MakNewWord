@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.mak.eword.R;
 import com.mak.eword.base.BaseRecyclerAdapter;
-import com.mak.eword.greendao.service.WordService;
 import com.mak.eword.mvp.model.MeanBean;
 import com.mak.eword.mvp.model.WordBean;
 import com.mak.eword.show.activity.AddWordActivity;
@@ -61,7 +60,7 @@ public class MessageItemAdapter extends BaseRecyclerAdapter<WordBean> {
             }
             wordMeanTv.setText(sb.toString());
         }
-        if (model.getIsRemember()) {
+        if (model.getIsRemember()==1) {
             finishIv.setVisibility(View.VISIBLE);
         } else {
             finishIv.setVisibility(View.GONE);
@@ -89,7 +88,7 @@ public class MessageItemAdapter extends BaseRecyclerAdapter<WordBean> {
         deleteTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                WordService.getInstance(context).deleteWord(model);
+                //WordService.getInstance(context).deleteWord(model);
                 swipeMenuLayout.smoothClose();
                 removePosition(position);
             }

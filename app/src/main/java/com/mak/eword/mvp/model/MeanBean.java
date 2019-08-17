@@ -7,8 +7,17 @@ import java.io.Serializable;
  * Content:
  */
 public class MeanBean implements Serializable {
+    private Integer id;
     private String class_;
     private String mean_;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getClass_() {
         return class_;

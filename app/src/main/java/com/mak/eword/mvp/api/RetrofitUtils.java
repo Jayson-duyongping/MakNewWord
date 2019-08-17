@@ -29,8 +29,8 @@ public class RetrofitUtils {
     /**
      * 接口地址
      */
-    //public static final String BASE_API = "http://eword.ngrok.xiaomiqiu.cn/";
-    public static final String BASE_API = "http://192.168.23.1:9090/";
+    public static final String BASE_API = "http://eword.ngrok.xiaomiqiu.cn/";
+    //public static final String BASE_API = "http://s2480915s9.zicp.vip:48477/";
 
     public static final int CONNECT_TIME_OUT = 30;//连接超时时长x秒
     public static final int READ_TIME_OUT = 30;//读数据超时时长x秒

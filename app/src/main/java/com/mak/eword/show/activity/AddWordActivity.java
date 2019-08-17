@@ -1,8 +1,6 @@
 package com.mak.eword.show.activity;
 
 import android.animation.Animator;
-import android.animation.AnimatorSet;
-import android.animation.ValueAnimator;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,13 +12,15 @@ import android.widget.TextView;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
-import com.jayson.commonlib.widget.smartrefresh.util.DensityUtil;
 import com.mak.eword.R;
 import com.mak.eword.base.BaseFragmentActivity;
 import com.mak.eword.constant.StringConstant;
-import com.mak.eword.greendao.service.WordService;
+import com.mak.eword.mvp.inface.IWordEditView;
+import com.mak.eword.mvp.model.BaseErrorBean;
 import com.mak.eword.mvp.model.MeanBean;
 import com.mak.eword.mvp.model.WordBean;
+import com.mak.eword.mvp.model.common.CommonBean;
+import com.mak.eword.mvp.presenter.WordEditPresenter;
 import com.mak.eword.utils.ToastUtils;
 import com.mak.eword.utils.manager.StorageDayManager;
 import com.mak.eword.widget.HeaderView;
@@ -39,7 +39,7 @@ import butterknife.OnClick;
 /**
  * 新增单词页面
  */
-public class AddWordActivity extends BaseFragmentActivity {
+public class AddWordActivity extends BaseFragmentActivity implements IWordEditView {
 
     @BindView(R.id.headerView)
     HeaderView headerView;
@@ -66,6 +66,8 @@ public class AddWordActivity extends BaseFragmentActivity {
     private List<MeanBean> meanList;
     //本类全局单词实体
     private WordBean wordBean;
+
+    private WordEditPresenter wordEditPresenter = new WordEditPresenter(this, this);
 
     @Override
     protected int getContentViewId() {
@@ -107,9 +109,10 @@ public class AddWordActivity extends BaseFragmentActivity {
     /**
      * 执行保存
      */
+    //是否是修改
+    boolean idEdit;
+
     private void saveWord() {
-        //是否是修改
-        boolean idEdit;
         if (wordBean == null) {
             //新增
             idEdit = false;
@@ -121,7 +124,7 @@ public class AddWordActivity extends BaseFragmentActivity {
         String content = contentEt.getText().toString();
         //主内容必须填
         if (TextUtils.isEmpty(content)) {
-            ToastUtils.show( "请填写一个生词");
+            ToastUtils.show("请填写一个生词");
             return;
         }
         wordBean.setContent(content);
@@ -142,21 +145,11 @@ public class AddWordActivity extends BaseFragmentActivity {
         wordBean.setMethod(methodEt.getText().toString());
         if (idEdit) {
             //修改
-            WordService.getInstance(mContext).updateWord(wordBean);
+            wordEditPresenter.alterWord(mContext, setRequestBody(wordBean));
         } else {
             //新增
-            WordService.getInstance(mContext).insertWord(wordBean);
-            //记录本地一个
-            StorageDayManager.getInstance(mContext)
-                    .handlerDayNumber(StringConstant.Share_Record_Count);
-            //更新记录个数
-            EventBus.getDefault().post(StringConstant.Event_UpdateDayNumber);
+            wordEditPresenter.addWord(mContext, setRequestBody(wordBean));
         }
-        //保存完成
-        ToastUtils.show( "保存成功");
-        //刷新界面
-        EventBus.getDefault().post(StringConstant.Event_RefreshWordList);
-        this.finish();
     }
 
     @Override
@@ -246,44 +239,41 @@ public class AddWordActivity extends BaseFragmentActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        //释放，否者内容溢出
-        if (animatorSetsuofang != null) {
-            animatorSetsuofang.cancel();
-            animatorSetsuofang = null;
-        }
+    public void showLoading() {
+
     }
 
-    /**
-     * 控件 显示和隐藏动画效果
-     *
-     * @param layout
-     * @param start
-     * @param end
-     */
-    AnimatorSet animatorSetsuofang;
+    @Override
+    public void closeLoading() {
 
-    private void performVisibleAnim(final TextView layout, int start, int end) {
-        //组合动画
-        animatorSetsuofang = new AnimatorSet();
-        //属性动画对象
-        ValueAnimator vaH;
-        //只是高度变化
-        vaH = ValueAnimator.ofInt(start, DensityUtil.dp2px(end));
-        vaH.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                //获取当前的height值
-                int h = (Integer) valueAnimator.getAnimatedValue();
-                //动态更新view的高度
-                layout.getLayoutParams().height = h;
-                layout.requestLayout();
+    }
+
+    @Override
+    public void showToast(BaseErrorBean bean) {
+
+    }
+
+    @Override
+    public void showWordEditResult(CommonBean bean) {
+        if (bean != null && "200".equals(bean.getCode())) {
+            if (!idEdit) {
+                //新增成功
+                ToastUtils.show(bean.getMsg());
+                //记录本地一个
+                StorageDayManager.getInstance(mContext)
+                        .handlerDayNumber(StringConstant.Share_Record_Count);
+                //更新记录个数
+                EventBus.getDefault().post(StringConstant.Event_UpdateDayNumber);
+                //刷新界面
+                EventBus.getDefault().post(StringConstant.Event_RefreshWordList);
+                this.finish();
+            } else {
+                //修改成功
+                ToastUtils.show(bean.getMsg());
+                //刷新界面
+                EventBus.getDefault().post(StringConstant.Event_RefreshWordList);
+                this.finish();
             }
-        });
-        animatorSetsuofang.play(vaH);//两个动画同时开始
-        animatorSetsuofang.setDuration(500);
-        //开始动画
-        animatorSetsuofang.start();
+        }
     }
 }

@@ -54,14 +54,6 @@ public class WordFragment extends BaseFragment {
 
     @OnClick(R.id.add_word_tv)
     public void onAddWord() {
-        //查询每日记录上限
-        UserBean user = WordApp.instance.getUser();
-        int recordNum = StorageDayManager.getInstance(getContext())
-                .getRememberNum(StringConstant.Share_Record_Count);
-        if (recordNum >= user.getRecordTotalNum()) {
-            ToastUtils.show("当前记录已达上限，去修改计划表吧");
-            return;
-        }
         Intent intent = new Intent(getActivity(), AddWordActivity.class);
         startActivity(intent);
     }

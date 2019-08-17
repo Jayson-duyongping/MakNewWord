@@ -157,7 +157,8 @@ public abstract class BaseListFragment extends BaseFragment implements OnRefresh
         if (mRecyclerView.getAdapter().getItemCount() == 0) {
             if (!isSuc) {
                 //网络等原因失败，显示这个空页面
-                showNetError();
+                //showNetError();
+                showEmpty(emptyType);
             } else {
                 //其余正常，显示这个空页面
                 showEmpty(emptyType);

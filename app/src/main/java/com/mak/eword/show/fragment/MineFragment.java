@@ -17,11 +17,18 @@ import com.mak.eword.R;
 import com.mak.eword.application.WordApp;
 import com.mak.eword.base.BaseFragment;
 import com.mak.eword.constant.StringConstant;
+import com.mak.eword.mvp.inface.IWordPlanView;
+import com.mak.eword.mvp.model.BaseErrorBean;
 import com.mak.eword.mvp.model.UserBean;
+import com.mak.eword.mvp.model.WordPlanBean;
+import com.mak.eword.mvp.model.common.CommonBean;
+import com.mak.eword.mvp.model.request.WordPlanReq;
+import com.mak.eword.mvp.presenter.WordPlanPresenter;
 import com.mak.eword.show.activity.AboutActivity;
 import com.mak.eword.show.activity.CommentActivity;
 import com.mak.eword.show.activity.SettingActivity;
 import com.mak.eword.utils.PopupWindowUtil;
+import com.mak.eword.utils.ToastUtils;
 import com.mak.eword.utils.manager.StorageDayManager;
 
 
@@ -31,7 +38,7 @@ import butterknife.OnClick;
 /**
  * 我的Fragment
  */
-public class MineFragment extends BaseFragment {
+public class MineFragment extends BaseFragment implements IWordPlanView {
     @BindView(R.id.mine_parent)
     LinearLayout mineParent;
     @BindView(R.id.user_name_tv)
@@ -50,8 +57,10 @@ public class MineFragment extends BaseFragment {
 
     private UserBean userBean;
 
-    private int recordNum = 50;
-    private int rememberNum = 30;
+    private int recordDayNum = 30;
+    private int rememberDayNum = 30;
+
+    private WordPlanPresenter wordPlanPresenter = new WordPlanPresenter(this, getActivity());
 
     @Override
     protected int getLayout() {
@@ -71,6 +80,7 @@ public class MineFragment extends BaseFragment {
         userBean = WordApp.instance.getUser();
         //设置
         userNameTv.setText(userBean.getUsername());
+        //更新计划卡
         updateDayNumber();
     }
 
@@ -105,24 +115,8 @@ public class MineFragment extends BaseFragment {
      * 刷新计划卡
      */
     public void updateDayNumber() {
-        int recordNum = StorageDayManager.getInstance(getContext())
-                .getRememberNum(StringConstant.Share_Record_Count);
-        int rememberNum = StorageDayManager.getInstance(getContext())
-                .getRememberNum(StringConstant.Share_Remember_Count);
-        dayRecordTv.setText(recordNum + "/" + userBean.getRecordTotalNum());
-        dayRememberTv.setText(rememberNum + "/" + userBean.getRememberTotalNum());
-        if (recordNum >= userBean.getRecordTotalNum()) {
-            //记录计划已经满了
-            dayRecordCard.setCardBackgroundColor(getContext().getResources().getColor(R.color.color_orange));
-        } else {
-            dayRecordCard.setCardBackgroundColor(getContext().getResources().getColor(R.color.color_lan1));
-        }
-        if (rememberNum >= userBean.getRememberTotalNum()) {
-            //记忆计划已经满了
-            dayRememberCard.setCardBackgroundColor(getResources().getColor(R.color.color_orange));
-        } else {
-            dayRememberCard.setCardBackgroundColor(getResources().getColor(R.color.color_lan1));
-        }
+        //请求获取计划卡
+        wordPlanPresenter.getWordPlan(getContext());
     }
 
     /**
@@ -147,19 +141,18 @@ public class MineFragment extends BaseFragment {
                 planPop.dismiss();
                 if (type == 0) {
                     if (!TextUtils.isEmpty(planNumEt.getText().toString())) {
-                        recordNum = Integer.parseInt(planNumEt.getText().toString());
-                        userBean.setRecordTotalNum(recordNum);
-                        //UserService.getInstance(getContext()).updateUser(userBean);
-                        updateDayNumber();
+                        recordDayNum = Integer.parseInt(planNumEt.getText().toString());
                     }
                 } else {
                     if (!TextUtils.isEmpty(planNumEt.getText().toString())) {
-                        rememberNum = Integer.parseInt(planNumEt.getText().toString());
-                        userBean.setRememberTotalNum(rememberNum);
-                        //UserService.getInstance(getContext()).updateUser(userBean);
-                        updateDayNumber();
+                        rememberDayNum = Integer.parseInt(planNumEt.getText().toString());
                     }
                 }
+                //请求修改
+                WordPlanReq req = new WordPlanReq();
+                req.setRecordDayNumber(recordDayNum);
+                req.setRememberDayNumber(rememberDayNum);
+                wordPlanPresenter.alterWordPlan(getContext(), setRequestBody(req));
             }
         });
         if (planPop == null) {
@@ -180,5 +173,56 @@ public class MineFragment extends BaseFragment {
                 }
             });
         }
+    }
+
+    @Override
+    public void showWordPlanResult(WordPlanBean bean) {
+        if (bean != null) {
+            recordDayNum = bean.getRecordDayNumber();
+            rememberDayNum = bean.getRememberDayNumber();
+
+            int recordNum = StorageDayManager.getInstance(getContext())
+                    .getRememberNum(StringConstant.Share_Record_Count);
+            int rememberNum = StorageDayManager.getInstance(getContext())
+                    .getRememberNum(StringConstant.Share_Remember_Count);
+            dayRecordTv.setText(recordNum + "/" + recordDayNum);
+            dayRememberTv.setText(rememberNum + "/" + rememberDayNum);
+            if (recordNum >= recordDayNum) {
+                //记录计划已经满了
+                dayRecordCard.setCardBackgroundColor(getContext().getResources().getColor(R.color.color_orange));
+            } else {
+                dayRecordCard.setCardBackgroundColor(getContext().getResources().getColor(R.color.color_lan1));
+            }
+            if (rememberNum >= rememberDayNum) {
+                //记忆计划已经满了
+                dayRememberCard.setCardBackgroundColor(getResources().getColor(R.color.color_orange));
+            } else {
+                dayRememberCard.setCardBackgroundColor(getResources().getColor(R.color.color_lan1));
+            }
+        }
+    }
+
+    @Override
+    public void showAlterWordPlanResult(CommonBean bean) {
+        if (bean != null) {
+            ToastUtils.show(bean.getMsg());
+            //修改了刷新计划卡
+            updateDayNumber();
+        }
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void closeLoading() {
+
+    }
+
+    @Override
+    public void showToast(BaseErrorBean bean) {
+
     }
 }

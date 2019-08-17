@@ -14,4 +14,15 @@ public class UrlConst {
     public static final String USER_REGISTER = "/user/register";
     //用户登录
     public static final String USER_LOGIN = "/user/login";
+
+    //单词计划
+    public static final String GET_WORD_PLAN = "/word/getWordPlan";
+    public static final String ALTER_WORD_PLAN = "/word/alterWordPlan";
+    //单词
+    public static final String Word_List = "/word/getWordList";
+    public static final String Add_Word = "/word/addWord";
+    public static final String Alter_Word = "/word/alterWord";
+    public static final String Delete_Word = "/word/deleteWord";
+    //句子
+    public static final String Sentence_List = "/word/getSentenceList";
 }

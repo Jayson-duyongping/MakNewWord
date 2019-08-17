@@ -9,9 +9,12 @@ import android.widget.TextView;
 import com.mak.eword.R;
 import com.mak.eword.base.BaseFragmentActivity;
 import com.mak.eword.constant.StringConstant;
-import com.mak.eword.greendao.service.WordService;
+import com.mak.eword.mvp.inface.IWordEditView;
+import com.mak.eword.mvp.model.BaseErrorBean;
 import com.mak.eword.mvp.model.MeanBean;
 import com.mak.eword.mvp.model.WordBean;
+import com.mak.eword.mvp.model.common.CommonBean;
+import com.mak.eword.mvp.presenter.WordEditPresenter;
 import com.mak.eword.utils.ToastUtils;
 import com.mak.eword.utils.manager.StorageDayManager;
 import com.mak.eword.widget.HeaderView;
@@ -22,7 +25,7 @@ import java.util.List;
 
 import butterknife.BindView;
 
-public class WordDetailActivity extends BaseFragmentActivity {
+public class WordDetailActivity extends BaseFragmentActivity implements IWordEditView {
     @BindView(R.id.headerView)
     HeaderView headerView;
     @BindView(R.id.content_tv)
@@ -37,6 +40,8 @@ public class WordDetailActivity extends BaseFragmentActivity {
     TextView methodTv;
 
     private WordBean wordBean;
+
+    private WordEditPresenter wordEditPresenter = new WordEditPresenter(this, this);
 
     @Override
     protected int getContentViewId() {
@@ -57,15 +62,8 @@ public class WordDetailActivity extends BaseFragmentActivity {
             @Override
             public void onClick(View view) {
                 //标记为已记
-                wordBean.setIsRemember(true);
-                WordService.getInstance(mContext).updateWord(wordBean);
-                ToastUtils.show( "已标记为已记");
-                EventBus.getDefault().post(StringConstant.Event_RefreshWordList);
-                //存一个当日记忆数到本地
-                StorageDayManager.getInstance(mContext)
-                        .handlerDayNumber(StringConstant.Share_Remember_Count);
-                //刷新MineFragment中的计划卡
-                EventBus.getDefault().post(StringConstant.Event_UpdateDayNumber);
+                wordBean.setIsRemember(1);
+                wordEditPresenter.alterWord(mContext, setRequestBody(wordBean));
             }
         });
     }
@@ -73,7 +71,7 @@ public class WordDetailActivity extends BaseFragmentActivity {
     @Override
     protected void initData() {
         wordBean = (WordBean) getIntent().getSerializableExtra("word");
-        if (!wordBean.getIsRemember()) {
+        if (wordBean.getIsRemember() != 1) {
             headerView.setRightText("已记");
         }
         contentTv.setText(wordBean.getContent());
@@ -118,5 +116,34 @@ public class WordDetailActivity extends BaseFragmentActivity {
             meanTv.setText(means.get(i).getMean_());
             meansContainerLl.addView(gameView);
         }
+    }
+
+    @Override
+    public void showWordEditResult(CommonBean bean) {
+        if (bean != null) {
+            ToastUtils.show("已标记为已记");
+            EventBus.getDefault().post(StringConstant.Event_RefreshWordList);
+            //存一个当日记忆数到本地
+            StorageDayManager.getInstance(mContext)
+                    .handlerDayNumber(StringConstant.Share_Remember_Count);
+            //刷新MineFragment中的计划卡
+            EventBus.getDefault().post(StringConstant.Event_UpdateDayNumber);
+            this.finish();
+        }
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void closeLoading() {
+
+    }
+
+    @Override
+    public void showToast(BaseErrorBean bean) {
+
     }
 }

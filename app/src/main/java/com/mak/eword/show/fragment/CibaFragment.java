@@ -22,15 +22,17 @@ import com.mak.eword.R;
 import com.mak.eword.application.WordApp;
 import com.mak.eword.base.BaseFragment;
 import com.mak.eword.constant.StringConstant;
-import com.mak.eword.greendao.service.WordService;
 import com.mak.eword.mvp.inface.ICibaWordView;
+import com.mak.eword.mvp.inface.IWordEditView;
 import com.mak.eword.mvp.model.BaseErrorBean;
 import com.mak.eword.mvp.model.CibaWordEnBean;
 import com.mak.eword.mvp.model.CibaWordZhBean;
 import com.mak.eword.mvp.model.MeanBean;
 import com.mak.eword.mvp.model.UserBean;
 import com.mak.eword.mvp.model.WordBean;
+import com.mak.eword.mvp.model.common.CommonBean;
 import com.mak.eword.mvp.presenter.CibaWordPresenter;
+import com.mak.eword.mvp.presenter.WordEditPresenter;
 import com.mak.eword.utils.KeybordUtil;
 import com.mak.eword.utils.StringUtil;
 import com.mak.eword.utils.ToastUtils;
@@ -47,7 +49,7 @@ import butterknife.OnClick;
 /**
  * 记单词fragment
  */
-public class CibaFragment extends BaseFragment implements ICibaWordView {
+public class CibaFragment extends BaseFragment implements ICibaWordView, IWordEditView {
     @BindView(R.id.ciba_parent)
     LinearLayout cibaParent;
     @BindView(R.id.search_et)
@@ -67,6 +69,7 @@ public class CibaFragment extends BaseFragment implements ICibaWordView {
     private CibaWordEnBean cibaWordEnBean;
 
     CibaWordPresenter cibaWordPresenter = new CibaWordPresenter(this, getActivity());
+    WordEditPresenter wordEditPresenter = new WordEditPresenter(this, getActivity());
     //音频播放器
     private MediaPlayer mediaPlayer;
     private AnimationDrawable pronAnim;
@@ -167,14 +170,6 @@ public class CibaFragment extends BaseFragment implements ICibaWordView {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.add_record_iv:
-                //查询每日记录上限
-                UserBean user = WordApp.instance.getUser();
-                int recordNum = StorageDayManager.getInstance(getContext())
-                        .getRememberNum(StringConstant.Share_Record_Count);
-                if (recordNum >= user.getRecordTotalNum()) {
-                    ToastUtils.show("当前记录已达上限，去修改计划表吧");
-                    return;
-                }
                 //添加到生词本
                 addNewRecord();
                 break;
@@ -186,12 +181,6 @@ public class CibaFragment extends BaseFragment implements ICibaWordView {
      */
     private void addNewRecord() {
         if (cibaWordEnBean != null) {
-            List<WordBean> existList = WordService.getInstance(getContext())
-                    .queryWordList(cibaWordEnBean.getWord_name());
-            if (existList.size() > 0) {
-                ToastUtils.show("生词本中已存在此单词");
-                return;
-            }
             WordBean wordBean = new WordBean();
             wordBean.setContent(cibaWordEnBean.getWord_name());
             List<MeanBean> means = new ArrayList<>();
@@ -213,16 +202,8 @@ public class CibaFragment extends BaseFragment implements ICibaWordView {
                 }
             }
             wordBean.setMeans(means);
-            //保存数据库
-            WordService.getInstance(getContext()).insertWord(wordBean);
-            ToastUtils.show("添加到生词本");
-            //刷新界面
-            EventBus.getDefault().post(StringConstant.Event_RefreshWordList);
-            //记录本地一个
-            StorageDayManager.getInstance(getContext())
-                    .handlerDayNumber(StringConstant.Share_Record_Count);
-            //更新记录个数
-            EventBus.getDefault().post(StringConstant.Event_UpdateDayNumber);
+            //新增单词
+            wordEditPresenter.addWord(getContext(), setRequestBody(wordBean));
         }
     }
 
@@ -401,6 +382,20 @@ public class CibaFragment extends BaseFragment implements ICibaWordView {
             if (KeybordUtil.isSoftInputShow(getActivity())) {
                 KeybordUtil.closeKeybord(searchEt, getContext());
             }
+        }
+    }
+
+    @Override
+    public void showWordEditResult(CommonBean bean) {
+        if (bean != null && "200".equals(bean.getCode())) {
+            ToastUtils.show("添加到生词本");
+            //刷新界面
+            EventBus.getDefault().post(StringConstant.Event_RefreshWordList);
+            //记录本地一个
+            StorageDayManager.getInstance(getContext())
+                    .handlerDayNumber(StringConstant.Share_Record_Count);
+            //更新记录个数
+            EventBus.getDefault().post(StringConstant.Event_UpdateDayNumber);
         }
     }
 
